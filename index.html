@@ -21,6 +21,7 @@
     #wrong-table { display: none; background: white; padding: 15px; border-radius: 10px; margin-top: 15px; border: 1px solid #ccc; }
     #wrong-table h3 { margin-top: 0; color: #dc3545; }
     #wrong-table p { margin: 4px 0; }
+    #status { margin-top: 10px; font-style: italic; color: #6c757d; }
   </style>
 </head>
 <body>
@@ -28,6 +29,7 @@
 <div class="container">
   <input type="file" id="file-input" accept=".txt" />
   <div id="file-name">Chưa chọn file</div>
+  <div id="status">Đang tải dữ liệu...</div>
   <div class="hanzi" id="hanzi-display">Chưa có từ</div>
   <input type="text" id="answer" placeholder="Nhập nghĩa hoặc Hán tự...">
   <div>
@@ -44,11 +46,13 @@
   <div id="pomodoro-timer" style="margin-top: 20px; font-size: 1.5em; display: none;">
     ⏳ Thời gian còn lại: <span id="time-display">25:00</span>
   </div>
+
   <canvas id="writing-canvas" width="400" height="400"></canvas>
   <div id="canvas-controls">
     <label>Độ dày bút: <input type="range" id="pen-size" min="1" max="15" value="5"></label>
     <button class="btn secondary" onclick="clearCanvas()">Xóa</button>
   </div>
+
   <div id="wrong-table">
     <h3>Sai rồi hehe!</h3>
     <p><strong>Chữ Hán:</strong> <span id="wt-hanzi"></span></p>
@@ -58,34 +62,193 @@
   </div>
 
 <script>
+// Biến toàn cục
 let words = [], currentWord = null, inputMode = "hanzi", noTone = false;
 let canvas = null, ctx = null, penSize = 5, drawing = false;
+let pomoInterval = null;
+let db = null;
 
-document.getElementById("file-input").addEventListener("change", function(e) {
-  const file = e.target.files[0];
-  if (!file) return;
-  document.getElementById("file-name").textContent = file.name;
-  const reader = new FileReader();
-  reader.onload = function(event) {
-    const lines = event.target.result.split("\n");
-    words = lines.map(line => {
-      const parts = line.trim().split(/\t+|\s{2,}/);
-      return parts.length >= 3 ? [parts[0], parts[1], parts.slice(2).join(' ').split(/[,/]/).map(s => s.trim())] : null;
-    }).filter(Boolean);
-    loadNewWord();
-    restoreFullProgress(); // khôi phục nếu có
+// Khởi tạo IndexedDB
+function initDB() {
+  return new Promise((resolve, reject) => {
+    const request = indexedDB.open("HSKTrainerDB", 1);
+    
+    request.onerror = (event) => {
+      console.error("Database error:", event.target.error);
+      reject("Database error");
+    };
+    
+    request.onupgradeneeded = (event) => {
+      const db = event.target.result;
+      if (!db.objectStoreNames.contains('state')) {
+        db.createObjectStore('state', { keyPath: 'id' });
+      }
+    };
+    
+    request.onsuccess = (event) => {
+      db = event.target.result;
+      resolve(db);
+    };
+  });
+}
+
+// Lưu trạng thái vào IndexedDB
+function saveState() {
+  if (!db) return;
+  
+  const transaction = db.transaction(['state'], 'readwrite');
+  const store = transaction.objectStore('state');
+  
+  const state = {
+    id: 1,
+    words: words,
+    currentWord: currentWord,
+    inputMode: inputMode,
+    noTone: noTone,
+    penSize: penSize,
+    fileName: document.getElementById("file-name").textContent
   };
-  reader.readAsText(file);
-});
+  
+  store.put(state);
+}
 
-document.getElementById("answer").addEventListener("keydown", function(e) {
-  if (e.key === "Enter") checkAnswer();
-});
+// Tải trạng thái từ IndexedDB
+function loadState() {
+  return new Promise((resolve, reject) => {
+    if (!db) {
+      reject("Database not initialized");
+      return;
+    }
+    
+    const transaction = db.transaction(['state'], 'readonly');
+    const store = transaction.objectStore('state');
+    const request = store.get(1);
+    
+    request.onerror = (event) => {
+      reject("Error loading state");
+    };
+    
+    request.onsuccess = (event) => {
+      const state = request.result;
+      if (state) {
+        words = state.words || [];
+        currentWord = state.currentWord || null;
+        inputMode = state.inputMode || "hanzi";
+        noTone = state.noTone || false;
+        penSize = state.penSize || 5;
+        document.getElementById("file-name").textContent = state.fileName || "Chưa chọn file";
+        document.getElementById("pen-size").value = penSize;
+        
+        if (words.length > 0 && currentWord) {
+          updateWordDisplay();
+          document.getElementById("status").textContent = `Đã tải ${words.length} từ | Chế độ: ${inputMode === "hanzi" ? "Nhập nghĩa" : "Nhập Hán tự"}`;
+        }
+      }
+      resolve();
+    };
+  });
+}
 
+// Khởi tạo ứng dụng
+async function initApp() {
+  try {
+    await initDB();
+    await loadState();
+    document.getElementById("status").textContent = words.length > 0 
+      ? `Đã tải ${words.length} từ | Chế độ: ${inputMode === "hanzi" ? "Nhập nghĩa" : "Nhập Hán tự"}`
+      : "Chưa có dữ liệu. Vui lòng tải file từ vựng.";
+    
+    setupCanvas();
+    setupEventListeners();
+  } catch (error) {
+    console.error("Initialization error:", error);
+    document.getElementById("status").textContent = "Lỗi khi tải dữ liệu. Làm mới trang để thử lại.";
+  }
+}
+
+// Thiết lập canvas
+function setupCanvas() {
+  canvas = document.getElementById("writing-canvas");
+  ctx = canvas.getContext("2d");
+  document.getElementById("pen-size").addEventListener("input", function(e) {
+    penSize = parseInt(e.target.value);
+    saveState();
+  });
+  
+  // Sự kiện chuột
+  canvas.addEventListener("mousedown", e => { 
+    drawing = true; 
+    ctx.beginPath(); 
+    ctx.moveTo(e.offsetX, e.offsetY); 
+  });
+  
+  canvas.addEventListener("mousemove", e => {
+    if (drawing) {
+      ctx.lineTo(e.offsetX, e.offsetY);
+      ctx.strokeStyle = "#000";
+      ctx.lineWidth = penSize;
+      ctx.stroke();
+    }
+  });
+  
+  canvas.addEventListener("mouseup", () => drawing = false);
+  canvas.addEventListener("mouseleave", () => drawing = false);
+
+  // Sự kiện cảm ứng
+  canvas.addEventListener("touchstart", function(e) {
+    e.preventDefault();
+    const touch = e.touches[0];
+    const rect = canvas.getBoundingClientRect();
+    drawing = true;
+    ctx.beginPath();
+    ctx.moveTo(touch.clientX - rect.left, touch.clientY - rect.top);
+  });
+  
+  canvas.addEventListener("touchmove", function(e) {
+    e.preventDefault();
+    if (!drawing) return;
+    const touch = e.touches[0];
+    const rect = canvas.getBoundingClientRect();
+    ctx.lineTo(touch.clientX - rect.left, touch.clientY - rect.top);
+    ctx.strokeStyle = "#000";
+    ctx.lineWidth = penSize;
+    ctx.stroke();
+  });
+  
+  canvas.addEventListener("touchend", () => drawing = false);
+}
+
+// Thiết lập event listeners
+function setupEventListeners() {
+  document.getElementById("file-input").addEventListener("change", function(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    document.getElementById("file-name").textContent = file.name;
+    const reader = new FileReader();
+    reader.onload = function(event) {
+      const lines = event.target.result.split("\n");
+      words = lines.map(line => {
+        const parts = line.trim().split(/\t+|\s{2,}/);
+        return parts.length >= 3 ? [parts[0], parts[1], parts.slice(2).join(' ').split(/[,/]/).map(s => s.trim())] : null;
+      }).filter(Boolean);
+      loadNewWord();
+      saveState();
+      document.getElementById("status").textContent = `Đã tải ${words.length} từ | Chế độ: ${inputMode === "hanzi" ? "Nhập nghĩa" : "Nhập Hán tự"}`;
+    };
+    reader.readAsText(file);
+  });
+  
+  document.getElementById("answer").addEventListener("keydown", function(e) {
+    if (e.key === "Enter") checkAnswer();
+  });
+}
+
+// Các hàm chức năng chính
 function loadNewWord() {
   if (!words.length) return;
   currentWord = words[Math.floor(Math.random() * words.length)];
   updateWordDisplay();
+  saveState();
 }
 
 function updateWordDisplay() {
@@ -100,20 +263,22 @@ function normalize(str) {
 }
 
 function checkAnswer() {
-  saveFullProgress();
   const input = document.getElementById("answer").value.trim();
   if (!input || !currentWord) return;
   let correct = false;
+  
   if (inputMode === "hanzi") {
     const clean = noTone ? normalize(input) : input.toLowerCase();
     correct = currentWord[2].some(m => (noTone ? normalize(m) : m.toLowerCase()) === clean);
   } else {
     correct = currentWord[0] === input;
   }
+  
   if (correct) {
     document.getElementById("result").textContent = "✅ Đúng rồi!";
     document.getElementById("wrong-table").style.display = "none";
     setTimeout(loadNewWord, 1000);
+    saveState();
   } else {
     document.getElementById("result").textContent = "❌ Sai rồi!";
     document.getElementById("wt-hanzi").textContent = currentWord[0];
@@ -124,34 +289,47 @@ function checkAnswer() {
   }
 }
 
-function skipWord() {
-  saveFullProgress();
-  loadNewWord();
+function skipWord() { 
+  loadNewWord(); 
+  saveState();
 }
 
 function toggleInputMode() {
   inputMode = inputMode === "hanzi" ? "meaning" : "hanzi";
   updateWordDisplay();
-  saveFullProgress();
+  saveState();
+  document.getElementById("status").textContent = `Đã tải ${words.length} từ | Chế độ: ${inputMode === "hanzi" ? "Nhập nghĩa" : "Nhập Hán tự"}`;
 }
 
-function toggleNoTone() {
-  noTone = !noTone;
-  alert(noTone ? "Đã bật không dấu" : "Đã tắt không dấu");
-  saveFullProgress();
+function toggleNoTone() { 
+  noTone = !noTone; 
+  alert(noTone ? "Đã bật không dấu" : "Đã tắt không dấu"); 
+  saveState();
 }
 
 function showHelp() {
-  alert("1. Tải file .txt: Hán tự\tPinyin\tNghĩa\n2. Nhập nghĩa hoặc chữ Hán tương ứng\n3. Có Pomodoro, luyện viết, lookup Hanzii");
+  alert(`Hướng dẫn sử dụng:
+1. Tải file .txt với định dạng: 
+   Hán tự[TAB]Pinyin[TAB]Nghĩa 1, Nghĩa 2
+   Ví dụ:
+   你好\tnǐ hǎo\txin chào, chào bạn
+
+2. Nhập nghĩa hoặc chữ Hán tương ứng với chế độ hiện tại
+
+3. Tính năng:
+   - Pomodoro: Hẹn giờ học tập 25 phút
+   - Luyện viết: Tập viết chữ Hán
+   - Tra Hanzii: Mở tra từ trên hanzii.net
+   - Lưu tự động: Dữ liệu được lưu tự động khi đóng trang`);
 }
 
-let pomoInterval = null;
 function startPomodoro() {
-  let duration = 25 * 60;
+  let duration = 25 * 60; // 25 phút tính bằng giây
   const timerDiv = document.getElementById("pomodoro-timer");
   const display = document.getElementById("time-display");
 
   if (pomoInterval) clearInterval(pomoInterval);
+
   timerDiv.style.display = "block";
 
   function updateTimer() {
@@ -161,6 +339,7 @@ function startPomodoro() {
     if (duration === 0) {
       clearInterval(pomoInterval);
       alert("⏰ Hết giờ! Nghỉ ngơi 5 phút nhé!");
+      timerDiv.style.display = "none";
     }
     duration--;
   }
@@ -176,12 +355,9 @@ function lookupHanzi() {
 }
 
 function toggleCanvas() {
-  canvas = document.getElementById("writing-canvas");
-  ctx = canvas.getContext("2d");
-  const controls = document.getElementById("canvas-controls");
   const show = canvas.style.display === "none";
-  canvas.style.display = controls.style.display = show ? "block" : "none";
-  drawGrid();
+  canvas.style.display = document.getElementById("canvas-controls").style.display = show ? "block" : "none";
+  if (show) drawGrid();
 }
 
 function clearCanvas() {
@@ -200,60 +376,8 @@ function drawGrid() {
   ctx.stroke();
 }
 
-document.getElementById("pen-size").addEventListener("input", function(e) {
-  penSize = parseInt(e.target.value);
-});
-canvas = document.getElementById("writing-canvas");
-canvas.addEventListener("mousedown", e => { drawing = true; ctx.beginPath(); ctx.moveTo(e.offsetX, e.offsetY); });
-canvas.addEventListener("mousemove", e => {
-  if (drawing) {
-    ctx.lineTo(e.offsetX, e.offsetY);
-    ctx.strokeStyle = "#000";
-    ctx.lineWidth = penSize;
-    ctx.stroke();
-  }
-});
-canvas.addEventListener("mouseup", () => drawing = false);
-canvas.addEventListener("mouseleave", () => drawing = false);
-canvas.addEventListener("touchstart", function(e) {
-  e.preventDefault();
-  const touch = e.touches[0];
-  const rect = canvas.getBoundingClientRect();
-  ctx.beginPath();
-  ctx.moveTo(touch.clientX - rect.left, touch.clientY - rect.top);
-});
-canvas.addEventListener("touchmove", function(e) {
-  e.preventDefault();
-  const touch = e.touches[0];
-  const rect = canvas.getBoundingClientRect();
-  ctx.lineTo(touch.clientX - rect.left, touch.clientY - rect.top);
-  ctx.strokeStyle = "#000";
-  ctx.lineWidth = penSize;
-  ctx.stroke();
-});
-canvas.addEventListener("touchend", () => drawing = false);
-
-function saveFullProgress() {
-  const progress = {
-    currentWord,
-    inputMode,
-    noTone,
-    words
-  };
-  localStorage.setItem("hsk_full_progress", JSON.stringify(progress));
-}
-
-function restoreFullProgress() {
-  const saved = localStorage.getItem("hsk_full_progress");
-  if (saved) {
-    const data = JSON.parse(saved);
-    if (data.words) words = data.words;
-    if (data.currentWord) currentWord = data.currentWord;
-    if (data.inputMode) inputMode = data.inputMode;
-    if (typeof data.noTone !== 'undefined') noTone = data.noTone;
-    updateWordDisplay();
-  }
-}
+// Khởi chạy ứng dụng khi trang tải xong
+window.addEventListener('DOMContentLoaded', initApp);
 </script>
 </div>
 </body>
