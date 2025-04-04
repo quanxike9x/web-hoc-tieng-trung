@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -42,17 +41,14 @@
     <button class="btn accent" onclick="lookupHanzi()">Tra Hanzii</button>
   </div>
   <div id="result"></div>
-<div id="pomodoro-timer" style="margin-top: 20px; font-size: 1.5em; display: none;">
-  ⏳ Thời gian còn lại: <span id="time-display">25:00</span>
-</div>
-
-
+  <div id="pomodoro-timer" style="margin-top: 20px; font-size: 1.5em; display: none;">
+    ⏳ Thời gian còn lại: <span id="time-display">25:00</span>
+  </div>
   <canvas id="writing-canvas" width="400" height="400"></canvas>
   <div id="canvas-controls">
     <label>Độ dày bút: <input type="range" id="pen-size" min="1" max="15" value="5"></label>
     <button class="btn secondary" onclick="clearCanvas()">Xóa</button>
   </div>
-
   <div id="wrong-table">
     <h3>Sai rồi hehe!</h3>
     <p><strong>Chữ Hán:</strong> <span id="wt-hanzi"></span></p>
@@ -64,6 +60,7 @@
 <script>
 let words = [], currentWord = null, inputMode = "hanzi", noTone = false;
 let canvas = null, ctx = null, penSize = 5, drawing = false;
+
 document.getElementById("file-input").addEventListener("change", function(e) {
   const file = e.target.files[0];
   if (!file) return;
@@ -76,27 +73,34 @@ document.getElementById("file-input").addEventListener("change", function(e) {
       return parts.length >= 3 ? [parts[0], parts[1], parts.slice(2).join(' ').split(/[,/]/).map(s => s.trim())] : null;
     }).filter(Boolean);
     loadNewWord();
+    restoreFullProgress(); // khôi phục nếu có
   };
   reader.readAsText(file);
 });
+
 document.getElementById("answer").addEventListener("keydown", function(e) {
   if (e.key === "Enter") checkAnswer();
 });
+
 function loadNewWord() {
   if (!words.length) return;
   currentWord = words[Math.floor(Math.random() * words.length)];
   updateWordDisplay();
 }
+
 function updateWordDisplay() {
   document.getElementById("hanzi-display").textContent = inputMode === "hanzi" ? currentWord[0] : currentWord[2][0];
   document.getElementById("answer").value = "";
   document.getElementById("result").textContent = "";
   document.getElementById("wrong-table").style.display = "none";
 }
+
 function normalize(str) {
   return str.normalize("NFD").replace(/\p{Diacritic}/gu, "").replace(/đ/g, "d").toLowerCase();
 }
+
 function checkAnswer() {
+  saveFullProgress();
   const input = document.getElementById("answer").value.trim();
   if (!input || !currentWord) return;
   let correct = false;
@@ -119,23 +123,35 @@ function checkAnswer() {
     document.getElementById("wrong-table").style.display = "block";
   }
 }
-function skipWord() { loadNewWord(); }
+
+function skipWord() {
+  saveFullProgress();
+  loadNewWord();
+}
+
 function toggleInputMode() {
   inputMode = inputMode === "hanzi" ? "meaning" : "hanzi";
-  updateWordDisplay(); // giữ nguyên từ cũ
+  updateWordDisplay();
+  saveFullProgress();
 }
-function toggleNoTone() { noTone = !noTone; alert(noTone ? "Đã bật không dấu" : "Đã tắt không dấu"); }
+
+function toggleNoTone() {
+  noTone = !noTone;
+  alert(noTone ? "Đã bật không dấu" : "Đã tắt không dấu");
+  saveFullProgress();
+}
+
 function showHelp() {
   alert("1. Tải file .txt: Hán tự\tPinyin\tNghĩa\n2. Nhập nghĩa hoặc chữ Hán tương ứng\n3. Có Pomodoro, luyện viết, lookup Hanzii");
 }
+
 let pomoInterval = null;
 function startPomodoro() {
-  let duration = 25 * 60; // 25 phút tính bằng giây
+  let duration = 25 * 60;
   const timerDiv = document.getElementById("pomodoro-timer");
   const display = document.getElementById("time-display");
 
-  if (pomoInterval) clearInterval(pomoInterval); // nếu đang chạy thì reset
-
+  if (pomoInterval) clearInterval(pomoInterval);
   timerDiv.style.display = "block";
 
   function updateTimer() {
@@ -152,11 +168,13 @@ function startPomodoro() {
   updateTimer();
   pomoInterval = setInterval(updateTimer, 1000);
 }
+
 function lookupHanzi() {
   if (!currentWord) return;
   const url = "https://hanzii.net/search/word/" + currentWord[0] + "?hl=vi";
   window.open(url, "_blank");
 }
+
 function toggleCanvas() {
   canvas = document.getElementById("writing-canvas");
   ctx = canvas.getContext("2d");
@@ -165,10 +183,12 @@ function toggleCanvas() {
   canvas.style.display = controls.style.display = show ? "block" : "none";
   drawGrid();
 }
+
 function clearCanvas() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   drawGrid();
 }
+
 function drawGrid() {
   ctx.strokeStyle = "#ddd";
   ctx.lineWidth = 1;
@@ -179,6 +199,7 @@ function drawGrid() {
   ctx.moveTo(400, 0); ctx.lineTo(0, 400);
   ctx.stroke();
 }
+
 document.getElementById("pen-size").addEventListener("input", function(e) {
   penSize = parseInt(e.target.value);
 });
@@ -194,8 +215,6 @@ canvas.addEventListener("mousemove", e => {
 });
 canvas.addEventListener("mouseup", () => drawing = false);
 canvas.addEventListener("mouseleave", () => drawing = false);
-
-// hỗ trợ cảm ứng
 canvas.addEventListener("touchstart", function(e) {
   e.preventDefault();
   const touch = e.touches[0];
@@ -213,6 +232,28 @@ canvas.addEventListener("touchmove", function(e) {
   ctx.stroke();
 });
 canvas.addEventListener("touchend", () => drawing = false);
+
+function saveFullProgress() {
+  const progress = {
+    currentWord,
+    inputMode,
+    noTone,
+    words
+  };
+  localStorage.setItem("hsk_full_progress", JSON.stringify(progress));
+}
+
+function restoreFullProgress() {
+  const saved = localStorage.getItem("hsk_full_progress");
+  if (saved) {
+    const data = JSON.parse(saved);
+    if (data.words) words = data.words;
+    if (data.currentWord) currentWord = data.currentWord;
+    if (data.inputMode) inputMode = data.inputMode;
+    if (typeof data.noTone !== 'undefined') noTone = data.noTone;
+    updateWordDisplay();
+  }
+}
 </script>
 </div>
 </body>
