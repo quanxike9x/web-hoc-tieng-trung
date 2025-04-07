@@ -1,0 +1,468 @@
+光	guāng	Chỉ,riêng
+也许	yěxǔ	Có lẽ,có lẽ
+八点	bā diǎn	8 giờ
+白	bái	trắng
+班	bān	lớp học
+本	běn	quyển, cuốn
+别	bié	đừng, khác biệt
+表示	biǎoshì	biểu thị, bày tỏ
+别人	biéren	người khác
+宾馆	bīnguǎn	khách sạn,Khách sạn
+不但...而且	bù dàn ... ér qiě	không những…mà còn
+不过	bùguò	nhưng, chỉ là
+部分	bùfen	phần, bộ phận
+才	cái	mới, vừa mới
+草	cǎo	cỏ,cây cỏ
+查	chá	kiểm tra, tra cứu
+参加	cānjiā	tham gia
+操作	cāozuò	vận hành, thao tác
+衬衫	chènshān	áo sơ mi
+成功	chénggōng	thành công
+城市	chéngshì	thành phố
+出现	chūxiàn	xuất hiện
+除了...以外	chúle ... yǐwài	ngoài...ra,ngoài ra
+词语	cíyǔ	từ ngữ, từ vựng
+重新	chóngxīn	làm lại, bắt đầu lại
+船	chuán	thuyền
+聪明	cōngmíng	thông minh
+打电话	dǎ diànhuà	gọi điện thoại
+大概	dàgài	đại khái, khoảng chừng
+大家	dàjiā	mọi người, tất cả
+但是	dànshì	nhưng
+到	dào	đến
+到处	dàochù	khắp nơi
+道理	dàolǐ	lý lẽ, đạo lý
+等	děng	đợi, chờ đợi
+地方	dìfāng	địa phương, nơi
+地址	dìzhǐ	địa chỉ
+电影	diànyǐng	phim điện ảnh
+动物	dòngwù	động vật
+对面	duìmiàn	đối diện
+对不起	duìbuqǐ	xin lỗi
+方便	fāngbiàn	thuận tiện,Thuận tiện
+非常	fēicháng	vô cùng, rất,đặc biệt
+飞	fēi	bay
+分钟	fēnzhōng	phút
+附近	fùjìn	gần, lân cận
+复习	fùxí	ôn tập, xem lại
+负责	fùzé	phụ trách
+高	gāo	cao
+高兴	gāoxìng	vui mừng
+给	gěi	cho, tặng
+跟	gēn	cùng, theo, với
+工作	gōngzuò	công việc
+公共	gōnggòng	công cộng
+公司	gōngsī	công ty
+关	guān	đóng, quan tâm
+关于	guānyú	về, liên quan đến
+贵	guì	đắt, quý
+孩子	háizi	đứa trẻ, con cái
+好像	hǎoxiàng	hình như, giống như
+很	hěn	rất
+会	huì	có thể, hội, sẽ
+欢迎	huānyíng	chào mừng
+会议	huìyì	hội nghị
+火车	huǒchē	tàu hỏa
+兴奋	/ Xīngfèn /	Hưng phấn
+根据	/ Gēnjù /	Căn cứ,dựa theo
+纸箱	/ Zhǐxiāng /	Thùng giấy
+电梯	/ Diàntī /	Thang máy
+会议厅	huìyì tīng	Phòng họp,phòng họp,hội ý
+厅	tīng	Sảnh, phòng lớn
+服务员	fúwùyuán	Nhân viên phục vụ
+长	zhǎng	Lớn lên, phát triển
+个子	gèzi	Dáng người
+戴	dài	Đeo
+副	fù	Cặp, đôi
+穿	chuān	Mặc, đi
+西服	xīfú	Bộ comple ,âu phục,tây phục
+裙子	qúnzi	Váy
+干	gàn	Làm
+主持人	zhǔchí rén	MC, người chủ trì
+主持	zhǔchí	Chủ trì
+小伙子	xiǎohuǒzi	Chàng trai
+扛	káng	Vác
+摄像机	shèxiàngjī	Máy quay
+麦克风	màikèfēng	Micro
+讲话	jiǎnghuà	Nói chuyện
+墙	qiáng	Tường, bức tường
+喜	xǐ	Vui
+婚礼	hūnlǐ	Lễ cưới
+热闹	rènao	Náo nhiệt
+挂	guà	Treo, móc
+灯笼	dēnglóng	Đèn lồng
+摆	bǎi	Bày, sắp xếp,bày
+棉袄	mián'ǎo	Áo bông
+新娘	xīnniáng	Cô dâu
+新郎	xīnláng	Chú rể
+帅	shuài	Đẹp trai
+领带	lǐngdài	Cà vạt
+热情	rèqíng	Nhiệt tình
+客人	kèrén	Khách
+倒	dào	Rót ,rót
+不停	bù tíng	Không ngừng,không dừng
+气氛	qìfēn	Không khí
+客厅	kètīng	Phòng khách
+大厅	dàtīng	Đại sảnh
+中心	zhōngxīn	Trung tâm
+购物中心	gòuwù zhōngxīn	Trung tâm mua sắm
+文化中心	wénhuà zhōngxīn	Trung tâm văn hóa,trung tâm văn hoá
+研究中心	yánjiū zhōngxīn	Trung tâm nghiên cứu
+帽子	màozi	Mũ
+项链	xiàngliàn	Dây chuyền,vòng cổ
+手表	shǒubiǎo	Đồng hồ
+口罩	kǒuzhào	Khẩu trang
+耳机	ěrjī	Tai nghe
+戒指	jièzhǐ	Nhẫn
+手套	shǒutào	Găng tay,găng tay,bao tay
+衣服	yīfu	Quần áo
+羽绒服	yǔróngfú	Áo lông vũ
+裤子	kùzi	Quần
+大衣	dàyī	Áo khoác dài
+鞋	xié	Giày
+自行车	zìxíngchē	Xe đạp
+双红喜字	shuāng hóng xǐ zì	Hai chữ Hỷ đỏ lớn
+花	huā	Hoa
+桌子	zhuōzi	Bàn
+酒	jiǔ	Rượu
+糖	táng	Kẹo
+喜糖	xǐtáng	Kẹo cưới
+喜酒	xǐjiǔ	Rượu cưới
+地图	dìtú	Bản đồ
+奥黛	Àodài	Áo dài
+笑	xiào	Cười
+画	huà	Vẽ ,vẽ
+纸	zhǐ	Giấy
+钥匙	yàoshi	chìa khóa,Chìa khoá
+门	mén	Cửa
+图书城	túshū chéng	Siêu thị sách
+进去	jìnqu	Đi vào
+各种各样	gè zhǒng gè yàng	Các loại
+书架	shūjià	Giá sách
+下来	xiàlai	Xuống
+抽	chōu	Rút
+挑	tiāo	Chọn
+选	xuǎn	Chọn
+小说	xiǎoshuō	Tiểu thuyết
+回去	huíqu	Quay về
+于是	yúshì	Thế là, do đó
+音像	yīnxiàng	Media,bản thu
+这里	zhèlǐ	Ở đây
+那里	nàlǐ	Ở kia
+拍	pāi	Chụp, quay
+盒	hé	Hộp
+下	xià	Sau, tới
+学期	xuéqī	Học kỳ
+饭馆	fànguǎn	Nhà hàng
+盘	pán	Đĩa
+累	lèi	Mệt
+困	kùn	Buồn ngủ
+维修	wéixiū	Sửa chữa
+楼梯	lóutī	Cầu thang bộ
+只好	zhǐhǎo	Đành phải
+提	tí	Nhấc, xách
+步	bù	Bước
+却	què	Nhưng, lại
+忽然	hūrán	Đột nhiên
+起来	qǐlai	Bắt đầu, dậy lên
+想起来	xiǎng qǐlai	Nhớ ra
+插	chā	Cắm
+拔	bá	Nhổ, lấy, rút
+哭笑不得	kūxiàobùdé	Dở khóc dở cười
+货架	huòjià	Giá hàng
+进口	jìnkǒu	Nhập khẩu
+出口	chūkǒu	Xuất khẩu
+抽时间	chōu shíjiān	Dành thời gian
+抽奖	chōu jiǎng	Bốc thăm trúng thưởng
+抽签	chōu qiān	Bốc thăm
+抽检	chōu jiǎn	Kiểm tra ngẫu nhiên
+挑食	tiāo shí	Kén ăn
+历史书	lìshǐ shū	Sách lịch sử
+光盘	guāngpán	Đĩa quang
+拍照	pāi zhào	Chụp ảnh
+拍视频	pāi shìpín	Quay video
+拍手	pāi shǒu	Vỗ tay
+纸巾	zhǐjīn	Giấy ăn
+卫生纸	wèishēng zhǐ	Giấy vệ sinh
+厕纸	cè zhǐ	Giấy toilet
+饭盒	fànhé	Hộp cơm
+护照	hùzhào	Hộ chiếu
+箱子	xiāngzi	Thùng, vali
+楼	lóu	Tầng
+便宜	piányí	Rẻ
+照	 zhào	Chụp
+照相机	 zhàoxiàngjī	Máy ảnh
+照相	 zhàoxiàng	Chụp ảnh
+洗	 xǐ	Rửa
+洗手	 xǐshǒu	Rửa tay
+洗脸	 xǐliǎn	Rửa mặt
+洗衣服	 xǐyīfu	Giặt quần áo
+洗照片	 xǐ zhàopiàn	Rửa ảnh
+闭	 bì	Nhắm,đóng
+闭眼	 bìyǎn	Nhắm mắt
+闭上眼	 bì shàng yǎn	Nhắm lại mắt
+睁开眼睛	 zhēngkāi yǎnjīng	Mở mắt
+关闭	 guānbì	Đóng hẳn
+闭嘴	 bìzuǐ	Im miệng,câm mồm
+安静	 ānjìng	Yên lặng,yên tĩnh
+自闭	 zìbì	Tự kỷ
+放大	 fàngdà	Phóng to
+倍	 bèi	Gấp
+公分	 gōngfēn	cm,centimet
+厘米	 límǐ	cm,centimet
+毫米	 háomǐ	mm
+平方米	 píngfāng mǐ	Mét vuông
+摔	 shuāi	Ngã
+摔跤	 shuāijiāo	Ngã
+摔倒	 shuāi dǎo	Ngã đổ,ngã ngửa
+掉	 diào	Rơi,rớt
+事故	 shìgù	Sự cố
+交通事故	 jiāotōng shìgù	Tai nạn giao thông,sự cố giao thông
+碰	 pèng	Va chạm
+遵守	 zūnshǒu	Tuân thủ
+规则	 guīzé	Quy tắc
+造成	 zàochéng	Gây ra
+主要	 zhǔyào	Chủ yếu
+原因	 yuányīn	Nguyên nhân
+赶快	 gǎnkuài	Nhanh chóng
+发展	 fāzhǎn	Phát triển
+差点儿	 chàdiǎnr	Suýt nữa
+倒霉	 dǎoméi	Xui xẻo
+别提了	 biétíle	Đừng nhắc nữa
+拥挤	 yōngjǐ	Đông đúc
+之一	 zhī yī	Một trong những
+保证	 bǎozhèng	Bảo đảm
+地上	 dìshang	Mặt đất
+上班	 shàngbān	Đi làm
+下班	 xiàbān	Tan ca
+浅	 qiǎn	Nông, nhạt
+眼镜	 yǎnjìng	Kính mắt
+眼睛	 yǎnjīng	Đôi mắt
+引起	 yǐnqǐ	Gây ra, dẫn đến
+找	zhǎo	Tìm kiếm
+半天	bàntiān	Nửa ngày
+放	fàng	Đặt, để
+手提包	shǒutíbāo	Túi xách
+口袋	kǒudài	Túi
+交	jiāo	Giao, nộp
+好好儿	hǎohāor	Cố gắng, chăm chỉ
+丢三落四	diūsānlàsì	Quên trước quên sau
+签证	qiānzhèng	Visa
+着	zháo	Kết quả bổ ngữ
+发现	fāxiàn	Phát hiện
+球迷	qiúmí	Fan bóng đá
+程度	chéngdù	Trình độ,trình độ
+为了	wèile	Vì, để
+精神	jīngshén	Tinh thần ,tinh thần
+承认	chéngrèn	Thừa nhận,thừa nhận
+发狂	fākuáng	Phát cuồng,phát cuồng
+锦标赛	jǐnbiāosài	Giải đấu,giải đấu
+期间	qījiān	Dịp, lúc
+像	xiàng	Giống như ,giống như
+贴	tiē	Dán ,dán
+通知	tōngzhī	Thông báo,thông tin,thông báo
+暂停	zàntíng	Tạm dừng  ,tạm dừng
+营业	yíngyè	Kinh doanh  ,kinh doanh
+够	gòu	Đủ  ,đủ
+算	suàn	Coi như  ,coi như
+多的是	duōdeshì	Nhiều hơn thế nữa
+准	zhǔn	Cho phép,chuẩn,cho phép
+辞职	cízhí	Thôi việc  ,nghỉ việc
+棒	bàng	Giỏi, cừ khôi
+欧洲	ōuzhōu	Châu Âu  ,châu âu
+夏雨	xiàyǔ	Hạ Vũ,mưa
+前天	qiántiān	Ngày hôm kia
+后天	hòutiān	Ngày kia
+导游	dǎoyóu	Hướng dẫn viên
+研究生	yánjiūshēng	Nghiên cứu sinh
+打工	dǎgōng	Làm thêm
+利用	lìyòng	Tận dụng
+假期	jiàqī	Kỳ nghỉ
+旅行社	lǚxíngshè	Công ty du lịch
+组织	zǔzhī	Tổ chức
+老板	lǎobǎn	Ông chủ
+需要	xūyào	Cần
+经常	jīngcháng	Thường xuyên
+收集	shōují	Thu thập
+安排	ānpái	Sắp xếp
+帮助	bāngzhù	Giúp đỡ
+希望	xīwàng	Hi vọng
+铁路	tiělù	Đường sắt
+风光	fēngguāng	Phong cảnh
+商量	shāngliang	Thương lượng
+故乡	gùxiāng	Quê hương
+自由	zìyóu	Tự do
+活动	huódòng	Hoạt động
+孔子	kǒngzǐ	Khổng Tử
+丹尼丝	dānnísī	Denise
+深圳	shēnzhèn	Thâm Quyến
+互相	hùxiāng	Lẫn nhau
+老外	lǎowài	Người nước ngoài
+马马虎虎	mǎmǎhūhū	Tàm tạm
+声调	shēngdiào	Thanh điệu
+鼻子	bízi	Mũi
+头发	tóufa	Tóc
+经历	jīnglì	Trải qua, kinh nghiệm
+过	guò	Đã, từng
+住院	zhùyuàn	Nằm viện
+中医	zhōngyī	Đông y
+苦	kǔ	Đắng
+中成药	zhōngchéngyào	Thuốc đông y
+甜	tián	Ngọt
+摸	mō	Sờ mó
+脉	mài	Mạch
+药方	yàofāng	Đơn thuốc
+按摩	ànmó	Mát xa
+针灸	zhēnjiǔ	Châm cứu
+方法	fāngfǎ	Phương pháp
+治	zhì	Điều trị
+扎针	zhāzhēn	Châm kim
+细	xì	Nhỏ, mảnh
+钢琴	gāngqín	Đàn piano
+亲耳	qīn'ěr	Tận tai
+协奏曲	xiézòuqǔ	Bản hòa tấu
+曲	qǔ	Bản nhạc
+曾经	céngjīng	Đã từng
+好	hǎo	Rất
+丑	chǒu	Xấu xí
+漂亮	piàoliang	Đẹp
+糖葫芦	tánghúlú	Kẹo hồ lô
+烤鸭	kǎoyā	Vịt quay
+白薯	báishǔ	Khoai lang nướng
+送	sòng	Tặng, đưa, mang
+开会	kāihuì	Họp
+教学	jiàoxué	Giảng dạy
+研讨	yántǎo	Nghiên cứu, thảo luận
+研讨会	yántǎo huì	Hội thảo
+经过	jīngguò	Đi qua, trải qua
+向	xiàng	Hướng về
+问好	wènhǎo	Hỏi thăm
+捎	shāo	Mang hộ, cầm hộ
+过去	guòqu	Đi qua
+过来	guòlai	Đi đến
+展览	zhǎnlǎn	Triển lãm
+展览馆	zhǎnlǎn guǎn	Nhà triển lãm
+上来	shànglai	Lên, lên trên
+开车	kāichē	Lái xe
+座位	zuòwèi	Chỗ ngồi
+注意	zhùyì	Chú ý
+出土	chūtǔ	Khai quật
+文物	wénwù	Hiện vật, văn vật
+大约	dàyuē	Khoảng
+要求	yāoqiú	Yêu cầu
+清楚	qīngchu	Rõ ràng
+师傅	shīfu	Sư phụ
+大使馆	dàshǐ guǎn	Đại sứ quán
+大使	dàshǐ	Đại sứ
+慢	màn	Chậm
+快	kuài	Nhanh
+爱	ài	Yêu, thích
+滑冰	huábīng	Trượt băng
+滑雪	huáxuě	Trượt tuyết
+家乡	jiāxiāng	Quê hương
+有名	yǒumíng	Nổi tiếng
+风景	fēngjǐng	Phong cảnh
+区	qū	Khu, vùng
+旅游	lǚyóu	Du lịch
+尤其	yóuqí	Đặc biệt
+凉快	liángkuai	Mát mẻ
+避暑	bìshǔ	Tránh nắng, nghỉ mát
+靠	kào	Dựa vào
+经营	jīngyíng	Kinh doanh, buôn bán
+发财	fācái	Phát tài
+树叶	shùyè	Lá cây
+树	shù	Cây
+叶	yè	Lá
+落	luò	Rơi
+红叶	hóngyè	Lá đỏ
+捡	jiǎn	Nhặt
+着急	zháojí	Lo lắng
+着呢	zhene	Rất, lắm
+表	biǎo	Đồng hồ
+坏	huài	Hỏng
+哎呀	āiyā	Ái, ối, ái chà
+停	tíng	Dừng lại, ngừng
+该	gāi	Nên, cần phải
+电池	diànchí	Pin
+迟到	chídào	Đến muộn
+东西	dōngxi	Đồ vật
+早	zǎo	Sớm
+晚	wǎn	Muộn
+时候	shíhòu	Lúc, thời gian
+国家	guójiā	Quốc gia, nước
+一样	yíyàng	Như nhau, giống nhau
+时差	shíchā	Chênh lệch thời gian
+夜	yè	Buổi đêm
+季节	jìjié	Mùa, vụ
+热	rè	Nóng
+冷	lěng	Lạnh
+刮风	guāfēng	Gió thổi
+下雪	xiàxuě	Tuyết rơi
+下雨	xiàyǔ	Mưa rơi
+不但……而且	búdàn...érqiě	Không những... mà còn
+得	dé	Đạt được
+分	fēn	Điểm, điểm số
+听写	tīngxiě	Nghe viết
+周末	zhōumò	Cuối tuần
+出去	chūqu	Đi ra ngoài
+历史	lìshǐ	Lịch sử
+研究	yánjiū	Nghiên cứu
+画册	huàcè	Tập tranh
+产生	chǎnshēng	Sản sinh, xuất hiện
+只是	zhǐshì	Chỉ là, có điều
+改革	gǎigé	Cải cách
+开放	kāifàng	Mở cửa, rộng mở
+一切	yíqiè	Tất cả
+老	lǎo	Già, cũ
+天气	tiānqì	Thời tiết
+时间	shíjiān	Thời gian
+春天	chūntiān	Mùa xuân
+夏天	xiàtiān	Mùa hè
+秋天	qiūtiān	Mùa thu
+冬天	dōngtiān	Mùa đông
+北京	Běijīng	Bắc Kinh
+西贡	Xīgòng	Sài Gòn
+雨季	yǔjì	Mùa mưa
+旱季	hànjì	Mùa khô
+风	fēng	Gió
+变化	biànhuà	Thay đổi
+暑假	shǔjià	Kỳ nghỉ hè
+还	hái	Còn, vẫn, vẫn còn
+比	bǐ	So với
+人口	rénkǒu	Dân số, nhân khẩu
+最	zuì	Nhất
+增加	zēngjiā	Tăng
+建筑	jiànzhù	Kiến trúc
+变	biàn	Thay đổi
+更	gèng	Càng
+暖和	nuǎnhuo	Ấm áp
+可是	kěshì	Nhưng
+暖气	nuǎnqì	Hệ thống sưởi
+预报	yùbào	Dự báo
+气温	qìwēn	Nhiệt độ
+屋子	wūzi	Phòng
+度	dù	Độ
+家庭	jiātíng	Gia đình
+旅馆	lǚguǎn	Nhà nghỉ, khách sạn
+饭店	fàndiàn	Khách sạn, nhà hàng
+好处	hǎochù	Điểm tốt
+坏处	huàichù	Điểm xấu
+慢性病	mànxìngbìng	Bệnh mãn tính
+高血压	gāo xuèyā	Cao huyết áp
+失眠	shīmián	Mất ngủ
+必须	bìxū	Cần phải
+打鱼	dǎyú	Đánh cá
+晒	shài	Phơi
+散步	sànbù	Đi dạo
+迷	mí	Mê, thích
+古典	gǔdiǎn	Cổ điển
+现代	xiàndài	Hiện đại
+世界	shìjiè	Thế giới
+名曲	míngqǔ	Bản nhạc nổi tiếng
+民歌	míngē	Dân ca
+流行	liúxíng	Thịnh hành
+歌曲	gēqǔ	Ca khúc
+歌词	gēcí	Lời bài hát
+有些	yǒuxiē	Một vài
+遥远	yáoyuǎn	Xa xôi
+年轻	niánqīng	Trẻ

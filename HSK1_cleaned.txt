@@ -1,0 +1,255 @@
+阿拉伯文	Ālābówén	Tiếng Ả Rập
+阿拉伯语	Ālābóyǔ	Tiếng Ả Rập
+啊	ā	A
+八	bā	Tám
+爸爸	bàba	Ba
+白	bái	Màu trắng
+百	bǎi	Một trăm
+班	bān	Lớp, ca
+办公	bàngōng	Làm việc
+办公室	bàngōngshì	Văn phòng
+包子	bāozi	Bánh bao
+杯	bēi	Cái cốc
+本	běn	Quyển
+笔	bǐ	Bút
+比较	bǐjiào	So sánh, tương đối
+别的	biéde	Cái khác
+不	bù	Không
+不客气	bú kèqi	Không có gì
+茶	chá	Trà
+茶叶	cháyè	Lá trà
+车	chē	Xe
+吃	chī	Ăn
+出租车	chūzūchē	Taxi
+词典	cídiǎn	Từ điển
+大	dà	Lớn
+大概	dàgài	Đại khái, khoảng
+大学	dàxué	Trường đại học
+大夫	dàifu	Bác sĩ
+但是	dànshì	Nhưng
+蛋	dàn	Trứng
+德国	Déguó	Nước Đức
+德文	Déwén	Tiếng Đức
+德语	Déyǔ	Tiếng Đức
+的	de	Của
+等	děng	Đợi
+弟弟	dìdi	Em trai
+点儿	diǎnr	Một chút
+电	diàn	Điện
+电话	diànhuà	Điện thoại
+都	dōu	Đều
+读	dú	Đọc
+对	duì	Đúng, đối với
+对不起	duì bu qǐ	Xin lỗi
+多	duō	Nhiều
+多少	duōshao	Bao nhiêu
+俄罗斯	Éguó	Nga
+俄文	Éwén	Tiếng Nga
+俄语	Éyǔ	Tiếng Nga
+二	èr	Hai
+发音	fāyīn	Phát âm
+法国	Fàguó	Pháp
+法文	Fǎwén	Tiếng Pháp
+法语	Fǎyǔ	Tiếng Pháp
+人	rén	Người
+人民	rénmín	Nhân dân
+人民币	rénmínbì	Đồng Nhân dân tệ
+日	rì	Ngày, mặt trời
+日本（国）	Rìběn (guó)	Nhật Bản
+日文	Rìwén	Tiếng Nhật
+日用品	rìyòngpǐn	Đồ dùng hàng ngày
+日语	Rìyǔ	Tiếng Nhật
+日元	rìyuán	Đồng Yên Nhật
+容易	róngyì	Dễ dàng
+三	sān	Ba
+商店	shāngdiàn	Cửa hàng
+上午	shàngwǔ	Buổi sáng
+少	shǎo	Ít
+身体	shēntǐ	Cơ thể, sức khỏe
+十	shí	Mười
+什么	shénme	Cái gì
+食堂	shítáng	Phòng ăn
+是	shì	Là
+手	shǒu	Tay
+手机	shǒujī	Điện thoại di động
+书	shū	Sách
+数	shù	Số, đếm
+谁	shéi / shuí	Ai
+水	shuǐ	Nước
+水果	shuǐguǒ	Hoa quả
+说	shuō	Nói
+四	sì	Bốn
+他	tā	Anh ấy
+他们	tāmen	Họ
+太	tài	Quá
+汤	tāng	Canh
+天	tiān	Trời, ngày
+听	tīng	Nghe
+同屋	tóngwū	Bạn cùng phòng
+同学	tóngxué	Bạn học
+图书馆	túshūguǎn	Thư viện
+外国	wàiguó	Nước ngoài
+外贸	wàimào	Thương mại quốc tế
+碗	wǎn	Cái bát
+万	wàn	Mười nghìn
+位	wèi	Vị
+文	wén	Văn, chữ viết
+问	wèn	Hỏi
+我	wǒ	Tôi
+我们	wǒmen	Chúng tôi
+五	wǔ	Năm
+西班牙文	Xībānyáwén	Tiếng Tây Ban Nha
+西班牙语	Xībānyáyǔ	Tiếng Tây Ban Nha
+西药	xīyào	Tây y, thuốc tây
+下午	xiàwǔ	Buổi chiều
+先	xiān	Trước, trước tiên
+先生	xiānsheng	Ông, thầy
+香水	xiāngshuǐ	Nước hoa
+箱子	xiāngzi	Cái vali, cái hộp
+小	xiǎo	Nhỏ
+小姐	xiǎojiě	Cô gái, tiểu thư
+校长	xiàozhǎng	Hiệu trưởng
+些	xiē	Một vài
+写	xiě	Viết
+谢谢	xièxie	Cảm ơn
+新	xīn	Mới
+信	xìn	Thư
+星期	xīngqī	Tuần, thứ
+行	xíng	Được, ổn
+姓	xìng	Họ
+星期天	xīngqītiān	Chủ nhật
+休息	xiūxi	Nghỉ ngơi
+学生	xuésheng	Học sinh
+学习	xuéxí	Học tập
+学校	xuéxiào	Trường học
+一	yī	Một
+一下	yíxià	Một chút, thử
+医生	yīshēng	Bác sĩ
+医院	yīyuàn	Bệnh viện
+有	yǒu	Có
+有名	yǒumíng	Nổi tiếng
+语法	yǔfǎ	Ngữ pháp
+语言	yǔyán	Ngôn ngữ
+再见	zàijiàn	Tạm biệt
+怎么	zěnme	Như thế nào
+这	zhè	Cái này, đây
+这儿	zhèr	Ở đây
+中国	Zhōngguó	Trung Quốc
+中文	Zhōngwén	Tiếng Trung
+中午	zhōngwǔ	Buổi trưa
+中药	zhōngyào	Thuốc đông y
+中医	zhōngyī	Đông y
+中餐	zhōngcān	Món ăn Trung Quốc
+住	zhù	Sống, cư trú
+桌子	zhuōzi	Cái bàn
+字	zì	Chữ
+坐	zuò	Ngồi
+做	zuò	Làm
+左边	zuǒbian	Bên trái
+昨天	zuótiān	Hôm qua
+老师	lǎoshī	Giáo viên
+学生	xuésheng	Học sinh
+同学	tóngxué	Bạn học
+校长	xiàozhǎng	Hiệu trưởng
+医生	yīshēng	Bác sĩ
+职员	zhíyuán	Nhân viên
+工人	gōngrén	Công nhân
+工程师	gōngchéngshī	Kỹ sư
+经理	jīnglǐ	Quản lý, giám đốc
+秘书	mìshū	Thư ký
+律师	lǜshī	Luật sư
+记者	jìzhě	Phóng viên
+服务员	fúwùyuán	Phục vụ, nhân viên phục vụ
+售货员	shòuhuòyuán	Nhân viên bán hàng
+翻译	fānyì	Phiên dịch
+司机	sījī	Tài xế
+银行职员	yínháng zhíyuán	Nhân viên ngân hàng
+学生	xuésheng	Học sinh
+朋友	péngyou	Bạn bè
+家人	jiārén	Người nhà
+爸爸	bàba	Ba
+妈妈	māma	Mẹ
+哥哥	gēge	Anh trai
+姐姐	jiějie	Chị gái
+弟弟	dìdi	Em trai
+妹妹	mèimei	Em gái
+儿子	érzi	Con trai
+女儿	nǚ’ér	Con gái
+丈夫	zhàngfu	Chồng
+妻子	qīzi	Vợ
+星期二	xīngqī’èr	Thứ ba
+星期六	xīngqīliù	Thứ bảy
+星期三	xīngqīsān	Thứ tư
+星期四	xīngqīsì	Thứ năm
+星期天	xīngqītiān	Chủ nhật
+星期五	xīngqīwǔ	Thứ sáu
+星期一	xīngqīyī	Thứ hai
+姓	xìng	Họ
+学	xué	Học
+学生	xuésheng	Học sinh
+学习	xuéxí	Học tập
+学校	xuéxiào	Trường học
+颜色	yánsè	Màu sắc
+药	yào	Thuốc
+要	yào	Muốn, cần
+也	yě	Cũng
+一	yī	Một
+一共	yígòng	Tổng cộng
+一会儿	yíhuìr	Một lát, chốc lát
+一下儿	yíxiàr	Một chút, thử
+一些	yìxiē	Một vài
+医院	yīyuàn	Bệnh viện
+椅子	yǐzi	Cái ghế
+银行	yínháng	Ngân hàng
+英国	Yīngguó	Nước Anh
+英文	Yīngwén	Tiếng Anh
+英语	Yīngyǔ	Tiếng Anh
+营业员	yíngyèyuán	Nhân viên bán hàng
+邮包	yóubāo	Bưu kiện
+邮局	yóujú	Bưu điện
+有	yǒu	Có
+点儿	diǎnr	Một chút
+雨	yǔ	Mưa
+雨伞	yǔsǎn	Cái ô, dù
+语法	yǔfǎ	Ngữ pháp
+语言	yǔyán	Ngôn ngữ
+杂志	zázhì	Tạp chí
+再见	zàijiàn	Tạm biệt
+在	zài	Ở, đang
+怎么	zěnme	Thế nào
+怎么样	zěnmeyàng	Thế nào
+张	zhāng	Họ Trương / tờ, tấm
+找	zhǎo	Tìm, trả lại
+照片	zhàopiàn	Bức ảnh
+这	zhè	Cái này
+这儿	zhèr	Ở đây
+这些	zhèxiē	Những cái này
+支	zhī	Cây
+知道	zhīdào	Biết
+职员	zhíyuán	Nhân viên
+只	zhǐ	Chỉ
+中国	Zhōngguó	Trung Quốc
+中文	Zhōngwén	Tiếng Trung
+中午	zhōngwǔ	Buổi trưa
+中药	zhōngyào	Thuốc Đông y
+重	zhòng	Nặng
+住	zhù	Sống, ở
+自行车	zìxíngchē	Xe đạp
+最近	zuìjìn	Gần đây
+昨天	zuótiān	Hôm qua
+坐	zuò	Ngồi
+做	zuò	Làm
+爱德华	Àidéhuá	Edward
+北京	Běijīng	Bắc Kinh
+北京语言大学	Běijīng Yǔyán Dàxué	Đại học Ngôn ngữ Bắc Kinh
+关	Guān	Họ Quan
+李昌浩	Lǐ Chānghào	Lý Xương Hạo
+林	Lín	Họ Lâm
+罗兰	Luólán	Lạc Lan
+马	Mǎ	Họ Mã
+玛丽	Mǎlì	Mary
+麦克	Màikè	Mike
+天安门	Tiān'ānmén	Thiên An Môn
+田芳	Tián Fāng	Điền Phương
+王	Wáng	Họ Vương
+张东	Zhāng Dōng	Trương Đông

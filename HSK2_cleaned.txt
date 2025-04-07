@@ -1,0 +1,430 @@
+现在	xiànzài	hiện tại, bây giờ
+跟	gēn	cùng, với
+一起	yìqǐ	cùng nhau
+咱们	zánmen	chúng ta
+走	zǒu	đi
+常	cháng	thường xuyên
+有时候	yǒushíhou	có khi, thỉnh thoảng
+时候	shíhou	thời gian, khi
+借	jiè	mượn
+上网	shàngwǎng	lên mạng
+查	chá	tra cứu
+资料	zīliào	tài liệu
+总是	zǒng shì	luôn luôn
+安静	ānjìng	yên tĩnh
+晚上	wǎnshang	buổi tối
+复习	fùxí	ôn tập
+课文	kèwén	bài khóa
+预习	yùxí	chuẩn bị bài
+生词	shēngcí	từ mới
+或者	huòzhě	hoặc là
+练习	liànxí	luyện tập
+聊天儿	liáotiānr	nói chuyện phiếm
+收发	shōufā	nhận và gửi
+电影	diànyǐng	phim
+电视剧	diànshìjù	phim truyền hình
+电视	diànshì	tivi
+休息	xiūxi	nghỉ ngơi
+宿舍	sùshè	ký túc xá
+公园	gōngyuán	công viên
+超市	chāoshì	siêu thị
+东西	dōngxi	đồ đạc
+正	zhèng	đang
+在	zài	ở, đang
+正在	zhèngzài	đang
+来	lái	đến
+出来	chūlai	ra, xuất hiện
+音乐	yīnyuè	âm nhạc
+没有	méiyǒu	không có
+录音	lùyīn	ghi âm
+事	shì	việc, sự việc
+书店	shūdiàn	hiệu sách
+想	xiǎng	muốn, nghĩ
+汉英	Hàn-Yīng	Hán Anh
+坐	zuò	ngồi
+挤	jǐ	chen chúc
+骑	qí	cưỡi
+行	xíng	được, ổn
+门	mén	cửa
+课	kè	bài học
+综合	zōnghé	tổng hợp
+口语	kǒuyǔ	khẩu ngữ
+听力	tīnglì	nghe hiểu
+阅读	yuèdú	đọc hiểu
+文化	wénhuà	văn hóa
+体育	tǐyù	thể thao
+教	jiāo	dạy
+包裹	bāoguǒ	bưu phẩm
+顺便	shùnbiàn	tiện thể
+替	tì	thay thế
+邮票	yóupiào	tem thư
+份	fèn	phần, bản
+青年	qīngnián	thanh niên
+报	bào	báo
+报纸	bàozhǐ	báo giấy
+拿	ná	cầm
+不用	búyòng	không cần
+用	yòng	dùng
+旅行	lǚxíng	du lịch
+代表	dàibiǎo	đại biểu
+团	tuán	đoàn
+参观	cānguān	tham quan
+当	dāng	làm
+翻译	fānyì	phiên dịch
+飞机	fēijī	máy bay
+飞	fēi	bay
+火车	huǒchē	tàu hỏa
+回来	huílai	trở về
+办	bàn	làm, xử lý
+帮	bāng	giúp
+浇	jiāo	tưới
+花	huā	hoa
+没问题	méiwèntí	không vấn đề gì
+Tiếng Trung	Phiên Âm	Nghĩa
+羽绒服	yǔróngfú	áo lông vũ
+试试	shìshi	thử
+商店	shāngdiàn	cửa hàng
+便宜	piányi	rẻ
+又...又...		vừa... vừa...
+看看	kànkan	xem thử
+当然	dāngrán	đương nhiên
+再	zài	lại, thêm
+有点儿	yǒudiǎnr	hơi...
+长	cháng	dài
+短	duǎn	ngắn
+深	shēn	sâu, đậm
+浅	qiǎn	nông, nhạt
+肥	féi	rộng, to
+瘦	shòu	gầy, chật
+合适	héshì	phù hợp
+大小	dàxiǎo	kích thước
+颜色	yánsè	màu sắc
+年	nián	năm
+今年	jīnnián	năm nay
+明年	míngnián	năm sau
+后年	hòunián	năm sau nữa
+去年	qùnián	năm ngoái
+毕业	bìyè	tốt nghiệp
+多	duō	bao nhiêu
+多大	duōdà	bao nhiêu tuổi
+岁	suì	tuổi
+属	shǔ	cầm tinh
+狗	gǒu	chó
+月	yuè	tháng
+号	hào	ngày
+生日	shēngrì	sinh nhật
+正好	zhènghǎo	đúng lúc
+打算	dǎsuan	dự định
+过	guò	qua, đón
+准备	zhǔnbèi	chuẩn bị
+旅行	lǚxíng	du lịch
+晚会	wǎnhuì	dạ hội
+参加	cānjiā	tham gia
+时间	shíjiān	thời gian
+点(钟)	diǎn(zhōng)	giờ
+就	jiù	ngay
+一定	yídìng	nhất định
+祝	zhù	chúc
+快乐	kuàilè	vui vẻ
+每	měi	mỗi
+早上	zǎoshang	buổi sáng
+半	bàn	nửa
+起床	qǐchuáng	dậy
+床	chuáng	giường
+早饭	zǎofàn	bữa sáng
+午饭	wǔfàn	bữa trưa
+晚饭	wǎnfàn	bữa tối
+以后	yǐhòu	sau khi
+差	chà	kém
+分(钟)	fēn(zhōng)	phút
+上课	shàng kè	vào học
+节	jié	tiết học
+教室	jiàoshì	phòng học
+操场	cāochǎng	sân thể thao
+锻炼	duànliàn	rèn luyện
+洗澡	xǐ zǎo	tắm
+洗	xǐ	rửa
+然后	ránhòu	sau đó
+睡觉	shuìjiào	ngủ
+爬	pá	leo
+山	shān	núi
+年级	niánjí	niên khóa
+出发	chūfā	xuất phát
+集合	jíhé	tập hợp
+准时	zhǔnshí	đúng giờ
+带	dài	mang theo
+叫	jiào	kêu, gọi
+让	ràng	để, khiến
+大家	dàjiā	mọi người
+谈	tán	nói chuyện, thảo luận
+自己	zìjǐ	bản thân
+爱好	àihào	sở thích
+京剧	jīngjù	Kinh kịch
+喜欢	xǐhuan	thích
+非常	fēicháng	rất, vô cùng
+唱	chàng	hát
+玩	wán	chơi
+电脑	diànnǎo	máy tính
+下课	xià kè	tan học
+感到	gǎndào	cảm thấy
+心情	xīnqíng	tâm trạng
+愉快	yúkuài	vui vẻ
+业余	yèyú	rảnh rỗi
+以前	yǐqián	trước đây
+就	jiù	liền, đã từng
+对	duì	đối với
+书法	shūfǎ	thư pháp
+特别	tèbié	đặc biệt
+感兴趣	gǎn xìngqù	có hứng thú
+兴趣	xìngqù	sở thích
+派	pài	phái, cử
+高兴	gāoxìng	vui mừng
+画	huà	vẽ
+画儿	huàr	tranh vẽ
+边	biān	bên
+东边	dōngbian	phía đông
+西边	xībian	phía tây
+南边	nánbian	phía nam
+北边	běibian	phía bắc
+前边	qiánbian	phía trước
+后边	hòubian	phía sau
+左边	zuǒbian	bên trái
+右边	yòubian	bên phải
+里边	lǐbian	bên trong
+外边	wàibian	bên ngoài
+上边	shàngbian	bên trên
+下边	xiàbian	bên dưới
+离	lí	cách, rời
+远	yuǎn	xa
+近	jìn	gần
+地方	dìfang	nơi chốn
+足球场	zúqiúchǎng	sân bóng đá
+足球	zúqiú	bóng đá
+劳驾	láojià	làm ơn
+打听	dǎting	hỏi thăm
+博物馆	bówùguǎn	bảo tàng
+和平	hépíng	hòa bình
+广场	guǎngchǎng	quảng trường
+中间	zhōngjiān	ở giữa
+从	cóng	từ
+到	dào	đến
+米	mǐ	mét
+一直	yìzhí	thẳng
+可能	kěnéng	có thể
+咳嗽	késou	ho
+感冒	gǎnmào	cảm lạnh
+了	le	rồi
+看病	kànbìng	khám bệnh
+病	bìng	bệnh
+会	huì	biết
+打	dǎ	đánh, chơi
+太极拳	tàijíquán	Thái Cực Quyền
+听说	tīngshuō	nghe nói
+下	xià	xuống, sau
+报名	bàomíng	đăng ký
+开始	kāishǐ	bắt đầu
+能	néng	có thể
+再	zài	lại
+遍	biàn	lần
+懂	dǒng	hiểu
+舒服	shūfu	thoải mái
+意思	yìsi	ý nghĩa
+次	cì	lần
+小时	xiǎoshí	giờ
+请假	qǐngjià	xin nghỉ
+头疼	tóuténg	đau đầu
+头	tóu	đầu
+疼	téng	đau
+发烧	fāshāo	sốt
+电视台	diànshìtái	đài truyền hình
+台	tái	đài, bệ
+表演	biǎoyǎn	biểu diễn
+节目	jiémù	chương trình
+愿意	yuànyì	sẵn lòng
+为什么	wèishénme	tại sao
+得	de	được
+不错	búcuò	không tệ
+错	cuò	sai
+进步	jìnbù	tiến bộ
+水平	shuǐpíng	trình độ
+提高	tígāo	nâng cao
+快	kuài	nhanh
+哪里	nǎli	đâu có
+准	zhǔn	chính xác
+流利	liúlì	trôi chảy
+努力	nǔlì	nỗ lực
+认真	rènzhēn	chăm chỉ
+看	kàn	xem
+为	wèi	vì
+这么	zhème	như vậy
+那么	nàme	như thế
+早	zǎo	sớm
+运动	yùndòng	vận động
+跑步	pǎobù	chạy bộ
+篮球	lánqiú	bóng rổ
+球	qiú	bóng
+刚才	gāngcái	vừa rồi
+可以	kěyǐ	có thể
+坚持	jiānchí	kiên trì
+因为	yīnwèi	bởi vì
+晚	wǎn	muộn
+喂	wèi	alo
+阿姨	āyí	dì, cô
+中学	zhōngxué	trung học
+出国	chūguó	ra nước ngoài
+出	chū	ra, xuất
+打电话	dǎ diànhuà	gọi điện thoại
+关机	guān jī	tắt máy
+关	guān	đóng, tắt
+开机	kāijī	mở máy
+开	kāi	mở
+又	yòu	lại, nữa
+响	xiǎng	kêu, vang lên
+接	jiē	bắt máy, tiếp nhận
+踢	tī	đá
+比赛	bǐsài	thi đấu
+队	duì	đội
+输	shū	thua
+赢	yíng	thắng
+比	bǐ	so sánh
+祝贺	zhùhè	chúc mừng
+哎	āi	ôi, ái
+上	shàng	lên
+托福	Tuōfú	TOEFL
+已经	yǐjīng	đã
+考	kǎo	thi
+陪	péi	cùng, theo
+了	le	rồi
+病人	bìngrén	bệnh nhân
+肚子	dùzi	bụng
+厉害	lìhai	nặng, dữ dội
+片	piàn	viên
+拉肚子	lā dùzi	tiêu chảy
+鱼	yú	cá
+牛肉	niúròu	thịt bò
+化验	huàyàn	xét nghiệm
+大便	dàbiàn	đại tiện
+小便	xiǎobiàn	tiểu tiện
+检查	jiǎnchá	kiểm tra
+结果	jiéguǒ	kết quả
+出来	chūlai	ra
+得	dé	bị
+肠炎	chángyán	viêm ruột
+消化	xiāohuà	tiêu hóa
+开药	kāi yào	kê đơn thuốc
+打针	dǎ zhēn	tiêm
+后	hòu	sau
+哭	kū	khóc
+寂寞	jìmò	cô đơn
+所以	suǒyǐ	cho nên
+别	bié	đừng
+难过	nánguò	buồn, khó chịu
+礼堂	lǐtáng	hội trường
+舞会	wǔhuì	vũ hội
+跳舞	tiàowǔ	nhảy múa
+租	zū	thuê
+套	tào	căn, bộ
+房子	fángzi	nhà
+满意	mǎnyì	hài lòng
+有的	yǒude	có cái, có người
+周围	zhōuwéi	xung quanh
+环境	huánjìng	môi trường
+乱	luàn	lộn xộn, bừa bãi
+厨房	chúfáng	nhà bếp
+卧室	wòshì	phòng ngủ
+客厅	kètīng	phòng khách
+面积	miànjī	diện tích
+层	céng	tầng
+平(方)米	píngfāngmǐ	mét vuông
+上去	shàngqu	đi lên
+阳光	yángguāng	ánh sáng mặt trời
+还是	háishi	vẫn là, hay là
+妻子	qīzi	vợ
+情况	qíngkuàng	tình hình
+才	cái	mới
+堵车	dǔchē	kẹt xe
+赶	gǎn	đuổi theo, kịp
+要是	yàoshi	nếu như
+房租	fángzū	tiền thuê phòng
+虽然	suīrán	tuy rằng
+真	zhēn	thật, quả thật
+条	tiáo	con
+河	hé	sông
+方便	fāngbiàn	tiện lợi
+站	zhàn	bến, trạm
+公共汽车	gònggòng qìchē	xe buýt
+车站	chēzhàn	bến xe
+地铁	dìtiě	tàu điện ngầm
+旁边	pángbiān	bên cạnh
+附近	fùjìn	lân cận, gần
+体育馆	tǐyùguǎn	cung thể thao
+考试	kǎoshì	thi cử
+题	tí	đề
+完	wán	xong, hoàn thành
+道	dào	lượng từ
+成绩	chéngjì	thành tích
+句子	jùzi	câu
+干什么	gàn shénme	làm gì
+干	gàn	làm
+看见	kànjiàn	nhìn thấy
+见	jiàn	thấy, gặp
+词	cí	từ vựng
+糟糕	zāogāo	hỏng bét
+成	chéng	thành, trở thành
+回信	huíxìn	trả lời thư
+故事	gùshi	câu chuyện
+有意思	yǒu yìsi	có ý nghĩa, thú vị
+页	yè	trang
+笑	xiào	cười
+会话	huìhuà	hội thoại
+念	niàn	đọc
+答	dá	trả lời
+办法	bànfa	cách, phương pháp
+合上	hé shàng	gập lại, đóng lại
+上	shàng	làm bổ ngữ kết quả
+听见	tīngjiàn	nghe thấy
+打开	dǎ kāi	mở ra
+作业	zuòyè	bài tập
+熟	shú	thuộc, quen
+再	zài	lại (1
+生活	shēnghuó	cuộc sống
+差不多	chàbuduō	gần như
+习惯	xíguàn	quen
+气候	qìhòu	khí hậu
+干燥	gānzào	khô hanh
+干净	gānjìng	sạch sẽ
+菜	cài	món ăn
+油腻	yóunì	dầu mỡ
+牛奶	niúnǎi	sữa bò
+不过	búguò	nhưng
+课间	kèjiān	giờ ra chơi
+块	kuài	miếng
+点心	diǎnxin	điểm tâm
+从来	cónglái	từ trước đến giờ
+午觉	wǔjiào	ngủ trưa
+游泳	yóuyǒng	bơi
+散步	sànbù	đi dạo
+功课	gōngkè	bài vở
+记住	jì zhù	nhớ kỹ
+记	jì	ghi nhớ
+一般	yìbān	bình thường
+感谢	gǎnxiè	cảm ơn
+父母	fùmǔ	cha mẹ
+机会	jīhuì	cơ hội
+原来	yuánlái	vốn dĩ, hóa ra
+延长	yáncháng	kéo dài
+练	liàn	luyện tập
+气功	qìgōng	khí công
+好	hǎo	rất
+不一定	bù yídìng	không nhất định
+钟头	zhōngtóu	tiếng đồng hồ
+效果	xiàoguǒ	hiệu quả
+挺	tǐng	rất
+好处	hǎochù	điểm tốt
+坏处	huàichù	điểm xấu
+慢性病	mànxìngbìng	bệnh mãn tính
+高血压	gāoxuèyā	cao huyết áp
+失眠	shī mián	mất ngủ
+必须	bìxū	phải, bắt buộc
+打鱼	dǎ yú	bắt cá
+晒	shài	phơi nắng
