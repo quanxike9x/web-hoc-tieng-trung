@@ -1,0 +1,1285 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8"/>
+  <title>HSK Trainer Web Full v3</title>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <style>
+    body { font-family: 'Arial Unicode MS', sans-serif; background: #f5f5f5; padding: 20px; margin: 0; }
+    header { background: #4a6fa5; color: white; padding: 1em; text-align: center; font-size: 1.5em; }
+    .container { max-width: 800px; margin: auto; }
+    .hanzi { font-size: 60px; font-family: 'SimSun'; text-align: center; margin: 20px 0; }
+    input[type="text"] { font-size: 1.1em; padding: 10px; width: 100%; box-sizing: border-box; }
+    .btn { padding: 10px 15px; margin: 8px 4px; border: none; border-radius: 5px; font-size: 1em; cursor: pointer; }
+    .accent { background-color: #4a6fa5; color: white; }
+    .success { background-color: #28a745; color: white; }
+    .danger { background-color: #dc3545; color: white; }
+    .secondary { background-color: #6c757d; color: white; }
+    #result { font-weight: bold; margin-top: 10px; }
+    canvas { display: none; border: 1px solid #ccc; margin-top: 20px; touch-action: none; }
+    #canvas-controls { display: none; margin-top: 10px; }
+    #wrong-table { display: none; background: white; padding: 15px; border-radius: 10px; margin-top: 15px; border: 1px solid #ccc; }
+    #wrong-table h3 { margin-top: 0; color: #dc3545; }
+    #wrong-table p { margin: 4px 0; }
+    #status { margin-top: 10px; font-style: italic; color: #6c757d; }
+  </style>
+
+  <!-- CSS cho popup Luyện viết (grid lines + container cho HanziWriter) -->
+  <style>
+    #character-target-div {
+      position: relative;
+      width: 300px;
+      height: 300px;
+      margin: auto;
+      background: white;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+      overflow: hidden;
+    }
+    #grid-canvas {
+      position: absolute;
+      top: 0; left: 0;
+      width: 300px;
+      height: 300px;
+      z-index: 0;
+      pointer-events: none;
+    }
+    .grid-line {
+      position: absolute;
+      background: rgba(0,0,0,0.1);
+    }
+    .grid-line.vertical {
+      width: 1px;
+      height: 100%;
+      left: 50%;
+      top: 0;
+    }
+    .grid-line.horizontal {
+      height: 1px;
+      width: 100%;
+      top: 50%;
+      left: 0;
+    }
+    .grid-line.diagonal1 {
+      width: 1px;
+      height: 141%;
+      transform: rotate(45deg);
+      left: 50%;
+      top: -20%;
+    }
+    .grid-line.diagonal2 {
+      width: 1px;
+      height: 141%;
+      transform: rotate(-45deg);
+      left: 50%;
+      top: -20%;
+    }
+    /* Container riêng cho HanziWriter, không bị xóa khi reset */
+    #writer-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 300px;
+      height: 300px;
+      z-index: 2;
+    }
+  </style>
+</head>
+<body>
+  <header>汉语水平 HSK Trainer IndexDb_Grammar</header>
+  <div class="container">
+    <input accept=".txt" id="file-input" type="file"/>
+    <div id="file-name">Chưa chọn file</div>
+    <div id="status">Đang tải dữ liệu...</div>
+    <div class="hanzi" id="hanzi-display">Chưa có từ</div>
+    <input id="answer" placeholder="Nhập nghĩa hoặc Hán tự..." type="text"/>
+    <div>
+      <button class="btn success" onclick="checkAnswer()">Kiểm tra</button>
+      <button class="btn danger" onclick="skipWord()">Bỏ qua</button>
+      <button class="btn secondary" onclick="toggleInputMode()">Đổi chế độ</button>
+      <button class="btn accent" onclick="showHelp()">Hướng dẫn</button>
+      <button class="btn secondary" onclick="toggleNoTone()">Bật/Tắt không dấu</button>
+      <button class="btn accent" onclick="startPomodoro()">Pomodoro</button>
+      <button class="btn secondary" onclick="openWritingPopup()">Luyện viết</button>
+      <button class="btn accent" onclick="lookupHanzi()">Tra Hanzii</button>
+      <button class="btn accent" onclick="openGrammarGame()">Ngữ pháp cảm nhận</button>
+    </div>
+    <div id="result"></div>
+    <div id="pomodoro-timer" style="margin-top: 20px; font-size: 1.5em; display: none;">
+      ⏳ Thời gian còn lại: <span id="time-display">25:00</span>
+    </div>
+    <canvas height="400" id="writing-canvas" width="400"></canvas>
+    <div id="canvas-controls">
+      <label>Độ dày bút: <input id="pen-size" max="15" min="1" type="range" value="5"/></label>
+      <button class="btn secondary" onclick="clearCanvas()">Xóa</button>
+    </div>
+    <div id="wrong-table">
+      <h3>Sai rồi hehe!</h3>
+      <p><strong>Chữ Hán:</strong> <span id="wt-hanzi"></span></p>
+      <p><strong>Pinyin:</strong> <span id="wt-pinyin"></span></p>
+      <p><strong>Nghĩa:</strong> <span id="wt-meanings"></span></p>
+      <p><strong>Bạn nhập:</strong> <span id="wt-userinput"></span></p>
+    </div>
+    <script>
+      // Biến toàn cục
+      let words = [], currentWord = null, inputMode = "hanzi", noTone = false;
+      let canvas = null, ctx = null, penSize = 5, drawing = false;
+      let pomoInterval = null;
+      let db = null;
+
+      // Khởi tạo IndexedDB
+      function initDB() {
+        return new Promise((resolve, reject) => {
+          const request = indexedDB.open("HSKTrainerDB", 1);
+          
+          request.onerror = (event) => {
+            console.error("Database error:", event.target.error);
+            reject("Database error");
+          };
+          
+          request.onupgradeneeded = (event) => {
+            const db = event.target.result;
+            if (!db.objectStoreNames.contains('state')) {
+              db.createObjectStore('state', { keyPath: 'id' });
+            }
+          };
+          
+          request.onsuccess = (event) => {
+            db = event.target.result;
+            resolve(db);
+          };
+        });
+      }
+
+      // Lưu trạng thái vào IndexedDB
+      function saveState() {
+        if (!db) return;
+        
+        const transaction = db.transaction(['state'], 'readwrite');
+        const store = transaction.objectStore('state');
+        
+        const state = {
+          id: 1,
+          words: words,
+          currentWord: currentWord,
+          inputMode: inputMode,
+          noTone: noTone,
+          penSize: penSize,
+          fileName: document.getElementById("file-name").textContent
+        };
+        
+        store.put(state);
+      }
+
+      // Tải trạng thái từ IndexedDB
+      function loadState() {
+        return new Promise((resolve, reject) => {
+          if (!db) {
+            reject("Database not initialized");
+            return;
+          }
+          
+          const transaction = db.transaction(['state'], 'readonly');
+          const store = transaction.objectStore('state');
+          const request = store.get(1);
+          
+          request.onerror = (event) => {
+            reject("Error loading state");
+          };
+          
+          request.onsuccess = (event) => {
+            const state = request.result;
+            if (state) {
+              words = state.words || [];
+              currentWord = state.currentWord || null;
+              inputMode = state.inputMode || "hanzi";
+              noTone = state.noTone || false;
+              penSize = state.penSize || 5;
+              document.getElementById("file-name").textContent = state.fileName || "Chưa chọn file";
+              document.getElementById("pen-size").value = penSize;
+              
+              if (words.length > 0 && currentWord) {
+                updateWordDisplay();
+                document.getElementById("status").textContent = `Đã tải ${words.length} từ | Chế độ: ${inputMode === "hanzi" ? "Nhập nghĩa" : "Nhập Hán tự"}`;
+              }
+            }
+            resolve();
+          };
+        });
+      }
+
+      // Khởi tạo ứng dụng
+      async function initApp() {
+        try {
+          await initDB();
+          await loadState();
+          document.getElementById("status").textContent = words.length > 0 
+            ? `Đã tải ${words.length} từ | Chế độ: ${inputMode === "hanzi" ? "Nhập nghĩa" : "Nhập Hán tự"}`
+            : "Chưa có dữ liệu. Vui lòng tải file từ vựng.";
+          
+          setupCanvas();
+          setupEventListeners();
+        } catch (error) {
+          console.error("Initialization error:", error);
+          document.getElementById("status").textContent = "Lỗi khi tải dữ liệu. Làm mới trang để thử lại.";
+        }
+      }
+
+      // Thiết lập canvas
+      function setupCanvas() {
+        canvas = document.getElementById("writing-canvas");
+        ctx = canvas.getContext("2d");
+        document.getElementById("pen-size").addEventListener("input", function(e) {
+          penSize = parseInt(e.target.value);
+          saveState();
+        });
+        
+        // Sự kiện chuột
+        canvas.addEventListener("mousedown", e => { 
+          drawing = true; 
+          ctx.beginPath(); 
+          ctx.moveTo(e.offsetX, e.offsetY); 
+        });
+        
+        canvas.addEventListener("mousemove", e => {
+          if (drawing) {
+            ctx.lineTo(e.offsetX, e.offsetY);
+            ctx.strokeStyle = "#000";
+            ctx.lineWidth = penSize;
+            ctx.stroke();
+          }
+        });
+        
+        canvas.addEventListener("mouseup", () => drawing = false);
+        canvas.addEventListener("mouseleave", () => drawing = false);
+
+        // Sự kiện cảm ứng
+        canvas.addEventListener("touchstart", function(e) {
+          e.preventDefault();
+          const touch = e.touches[0];
+          const rect = canvas.getBoundingClientRect();
+          drawing = true;
+          ctx.beginPath();
+          ctx.moveTo(touch.clientX - rect.left, touch.clientY - rect.top);
+        });
+        
+        canvas.addEventListener("touchmove", function(e) {
+          e.preventDefault();
+          if (!drawing) return;
+          const touch = e.touches[0];
+          const rect = canvas.getBoundingClientRect();
+          ctx.lineTo(touch.clientX - rect.left, touch.clientY - rect.top);
+          ctx.strokeStyle = "#000";
+          ctx.lineWidth = penSize;
+          ctx.stroke();
+        });
+        
+        canvas.addEventListener("touchend", () => drawing = false);
+      }
+
+      // Thiết lập event listeners
+      function setupEventListeners() {
+        document.getElementById("file-input").addEventListener("change", function(e) {
+          const file = e.target.files[0];
+          if (!file) return;
+          document.getElementById("file-name").textContent = file.name;
+          const reader = new FileReader();
+          reader.onload = function(event) {
+            const lines = event.target.result.split("\n");
+            words = lines.map(line => {
+              const parts = line.trim().split(/\t+|\s{2,}/);
+              return parts.length >= 3 ? [parts[0], parts[1], parts.slice(2).join(' ').split(/[,/]/).map(s => s.trim())] : null;
+            }).filter(Boolean);
+            loadNewWord();
+            saveState();
+            document.getElementById("status").textContent = `Đã tải ${words.length} từ | Chế độ: ${inputMode === "hanzi" ? "Nhập nghĩa" : "Nhập Hán tự"}`;
+          };
+          reader.readAsText(file);
+        });
+        
+        document.getElementById("answer").addEventListener("keydown", function(e) {
+          if (e.key === "Enter") checkAnswer();
+        });
+      }
+
+      // Các hàm chức năng chính
+      function loadNewWord() {
+        if (!words.length) return;
+        currentWord = words[Math.floor(Math.random() * words.length)];
+        updateWordDisplay();
+        saveState();
+      }
+
+      function updateWordDisplay() {
+        document.getElementById("hanzi-display").textContent = inputMode === "hanzi" ? currentWord[0] : currentWord[2][0];
+        document.getElementById("answer").value = "";
+        document.getElementById("result").textContent = "";
+        document.getElementById("wrong-table").style.display = "none";
+      }
+
+      function normalize(str) {
+        return str.normalize("NFD").replace(/\p{Diacritic}/gu, "").replace(/đ/g, "d").toLowerCase();
+      }
+
+      function checkAnswer() {
+        const input = document.getElementById("answer").value.trim();
+        if (!input || !currentWord) return;
+        let correct = false;
+        
+        if (inputMode === "hanzi") {
+          const clean = noTone ? normalize(input) : input.toLowerCase();
+          correct = currentWord[2].some(m => (noTone ? normalize(m) : m.toLowerCase()) === clean);
+        } else {
+          correct = currentWord[0] === input;
+        }
+        
+        if (correct) {
+          document.getElementById("result").textContent = "✅ Đúng rồi!";
+          document.getElementById("wrong-table").style.display = "none";
+          setTimeout(loadNewWord, 1000);
+          saveState();
+        } else {
+          document.getElementById("result").textContent = "❌ Sai rồi!";
+          document.getElementById("wt-hanzi").textContent = currentWord[0];
+          document.getElementById("wt-pinyin").textContent = currentWord[1];
+          document.getElementById("wt-meanings").textContent = currentWord[2].join(", ");
+          document.getElementById("wt-userinput").textContent = input;
+          document.getElementById("wrong-table").style.display = "block";
+        }
+      }
+
+      function skipWord() { 
+        loadNewWord(); 
+        saveState();
+      }
+
+      function toggleInputMode() {
+        inputMode = inputMode === "hanzi" ? "meaning" : "hanzi";
+        updateWordDisplay();
+        saveState();
+        document.getElementById("status").textContent = `Đã tải ${words.length} từ | Chế độ: ${inputMode === "hanzi" ? "Nhập nghĩa" : "Nhập Hán tự"}`;
+      }
+
+      function toggleNoTone() { 
+        noTone = !noTone; 
+        alert(noTone ? "Đã bật không dấu" : "Đã tắt không dấu"); 
+        saveState();
+      }
+
+      function showHelp() {
+        alert(`Hướng dẫn sử dụng:
+1. Tải file .txt với định dạng: 
+   Hán tự[TAB]Pinyin[TAB]Nghĩa 1, Nghĩa 2
+   Ví dụ:
+   你好\tnǐ hǎo\txin chào, chào bạn
+
+2. Nhập nghĩa hoặc chữ Hán tương ứng với chế độ hiện tại
+
+3. Tính năng:
+   - Pomodoro: Hẹn giờ học tập 25 phút
+   - Luyện viết: Tập viết chữ Hán
+   - Tra Hanzii: Mở tra từ trên hanzii.net
+   # Created by: @Quanxike9x
+
+🆘 Trợ giúp: Nếu gặp vấn đề xin vui lòng liên hệ Zalo: 0968645112`);
+      }
+
+      function startPomodoro() {
+        let duration = 25 * 60; // 25 phút tính bằng giây
+        const timerDiv = document.getElementById("pomodoro-timer");
+        const display = document.getElementById("time-display");
+
+        if (pomoInterval) clearInterval(pomoInterval);
+
+        timerDiv.style.display = "block";
+
+        function updateTimer() {
+          const minutes = String(Math.floor(duration / 60)).padStart(2, '0');
+          const seconds = String(duration % 60).padStart(2, '0');
+          display.textContent = `${minutes}:${seconds}`;
+          if (duration === 0) {
+            clearInterval(pomoInterval);
+            alert("⏰ Hết giờ! Nghỉ ngơi 5 phút nhé!");
+            timerDiv.style.display = "none";
+          }
+          duration--;
+        }
+
+        updateTimer();
+        pomoInterval = setInterval(updateTimer, 1000);
+      }
+
+      function lookupHanzi() {
+        if (!currentWord) return;
+        const url = "https://hanzii.net/search/word/" + currentWord[0] + "?hl=vi";
+        window.open(url, "_blank");
+      }
+
+      function toggleCanvas() {
+        const show = canvas.style.display === "none";
+        canvas.style.display = document.getElementById("canvas-controls").style.display = show ? "block" : "none";
+        if (show) drawGrid();
+      }
+
+      function clearCanvas() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        drawGrid();
+      }
+
+      function drawGrid() {
+        ctx.strokeStyle = "#ddd";
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(0, 200); ctx.lineTo(400, 200);
+        ctx.moveTo(200, 0); ctx.lineTo(200, 400);
+        ctx.moveTo(0, 0); ctx.lineTo(400, 400);
+        ctx.moveTo(400, 0); ctx.lineTo(0, 400);
+        ctx.stroke();
+      }
+
+      // Khởi chạy ứng dụng khi trang tải xong
+      window.addEventListener('DOMContentLoaded', initApp);
+    </script>
+  </div>
+
+  <!-- Popup Luyện viết (HanziWriter Modal) -->
+  <div id="writing-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:1000;">
+    <div style="background:white; width:350px; max-width:90%; margin:100px auto; padding:20px; border-radius:10px; text-align:center; position:relative;">
+      <h3>Luyện viết</h3>
+      <div id="writing-word" style="margin-top:10px; font-size:20px;"></div>
+      <div id="character-target-div">
+        <canvas id="grid-canvas" width="300" height="300"></canvas>
+        <div class="grid-line vertical"></div>
+        <div class="grid-line horizontal"></div>
+        <div class="grid-line diagonal1"></div>
+        <div class="grid-line diagonal2"></div>
+        <!-- Container riêng cho HanziWriter -->
+        <div id="writer-container"></div>
+      </div>
+      <button class="btn danger" onclick="closeWritingPopup()" style="margin-top:15px;">Đóng</button>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/hanzi-writer@2.2.2/dist/hanzi-writer.min.js"></script>
+  <script>
+    let writerInstance = null;
+    let writingChars = [];
+    let writingIndex = 0;
+
+    function openWritingPopup() {
+      if (!currentWord || !currentWord[0]) {
+        alert("Không có chữ Hán để luyện viết.");
+        return;
+      }
+      writingChars = currentWord[0].split('');
+      writingIndex = 0;
+      document.getElementById("writing-modal").style.display = "block";
+      drawGridLines();
+      startWritingNextChar();
+    }
+
+    function closeWritingPopup() {
+      document.getElementById("writing-modal").style.display = "none";
+    }
+
+    function startWritingNextChar() {
+      if (writingIndex >= writingChars.length) {
+        document.getElementById("writing-word").textContent = "✅ Đã luyện xong!";
+        return;
+      }
+      const char = writingChars[writingIndex];
+      document.getElementById("writing-word").textContent = `#${writingIndex + 1}: ${char}`;
+      // Xóa nội dung chỉ trong writer-container, giữ nguyên grid lines
+      document.getElementById("writer-container").innerHTML = "";
+      writerInstance = HanziWriter.create("writer-container", char, {
+        width: 300,
+        height: 300,
+        padding: 5,
+        showOutline: false,
+        showCharacter: false,
+        highlightOnComplete: true
+      });
+      writerInstance.quiz({
+        onComplete: function() {
+          setTimeout(() => {
+            writingIndex++;
+            startWritingNextChar();
+          }, 600);
+        }
+      });
+    }
+
+    function drawGridLines() {
+      const canvas = document.getElementById("grid-canvas");
+      if (!canvas) return;
+      const ctx = canvas.getContext("2d");
+      ctx.clearRect(0, 0, 300, 300);
+      ctx.strokeStyle = "rgba(0,0,0,0.08)";
+      ctx.lineWidth = 1;
+      
+      // Vẽ đường dọc giữa
+      ctx.beginPath(); ctx.moveTo(150, 0); ctx.lineTo(150, 300); ctx.stroke();
+      // Vẽ đường ngang giữa
+      ctx.beginPath(); ctx.moveTo(0, 150); ctx.lineTo(300, 150); ctx.stroke();
+      // Vẽ đường chéo /
+      ctx.beginPath(); ctx.moveTo(300, 0); ctx.lineTo(0, 300); ctx.stroke();
+      // Vẽ các đường phụ
+      ctx.beginPath(); ctx.moveTo(0, 75); ctx.lineTo(225, 300); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(75, 0); ctx.lineTo(300, 225); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(0, 225); ctx.lineTo(225, 0); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(75, 300); ctx.lineTo(300, 75); ctx.stroke();
+    }
+  </script>
+
+  <!-- Grammar Modal -->
+  <div id="grammar-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:9999; pointer-events:auto;">
+    <div style="background:white; max-width:90%; width:600px; margin:60px auto; padding:20px; border-radius:10px; position:relative;">
+      <h3>📘 Ngữ pháp cảm nhận (HSK1–6)</h3>
+      <label for="grammarLevel">Chọn cấp độ:</label>
+      <select id="grammarLevel" onchange="changeGrammarLevel()">
+        <option value="HSK1">HSK1</option>
+        <option value="HSK2">HSK2</option>
+        <option value="HSK3">HSK3</option>
+        <option value="HSK4">HSK4</option>
+        <option value="HSK5">HSK5</option>
+        <option value="HSK6">HSK6</option>
+      </select>
+      <p id="grammar-example" style="font-size:20px; margin-top:10px;"></p>
+      <input id="grammar-answer" placeholder="Nhập cấu trúc ngữ pháp..." style="width:100%; padding:10px;" />
+      <div style="margin-top:10px;">
+        <button class="btn accent" onclick="checkGrammarAnswer()">Kiểm tra</button>
+        <button class="btn secondary" onclick="nextGrammarExample()">Ví dụ khác</button>
+        <button class="btn secondary" onclick="nextGrammarStructure()">Cấu trúc khác</button>
+        <button class="btn danger" onclick="document.getElementById('grammar-modal').style.display='none'">Đóng</button>
+      </div>
+      <p id="grammar-feedback" style="margin-top:10px; font-weight:bold;"></p>
+    </div>
+  </div>
+
+  <script>
+    // Dữ liệu ngữ pháp cho các cấp độ HSK
+    const grammarData = {
+  "HSK1": [
+    {
+      "structure": "不 + TÍNH TỪ / ĐỘNG TỪ",
+      "meaning": "Dùng để phủ định hành động hoặc trạng thái.",
+      "examples": [
+        "我不去。",
+        "他不好。"
+      ]
+    },
+    {
+      "structure": "CÂU KHẲNG ĐỊNH + 吗？",
+      "meaning": "Câu hỏi đơn giản bằng cách thêm 吗 vào cuối câu.",
+      "examples": [
+        "你好吗？",
+        "你是老师吗？"
+      ]
+    },
+    {
+      "structure": "TÍNH TỪ + DANH TỪ",
+      "meaning": "Tính từ đứng trước danh từ để miêu tả.",
+      "examples": [
+        "白马。",
+        "大房子。"
+      ]
+    },
+    {
+      "structure": "Rất / Quá / Không quá + TÍNH TỪ",
+      "meaning": "Dùng 很 / 太 / 不太 để thể hiện mức độ.",
+      "examples": [
+        "她很好。",
+        "汉语不太难。"
+      ]
+    },
+    {
+      "structure": "Chủ ngữ + 去 + địa điểm + động từ + tân ngữ",
+      "meaning": "Câu đi đâu làm gì.",
+      "examples": [
+        "弟弟去河内寄钱。",
+        "我明天去银行取钱。"
+      ]
+    },
+    {
+      "structure": "ĐỊA ĐIỂM + 见",
+      "meaning": "Chào tạm biệt, hẹn gặp tại địa điểm/thời gian.",
+      "examples": [
+        "学校见！",
+        "明天见！"
+      ]
+    },
+    {
+      "structure": "在 + ĐỊA ĐIỂM",
+      "meaning": "Dùng để hỏi/diễn tả đang ở đâu.",
+      "examples": [
+        "你在哪儿？",
+        "她在图书馆。"
+      ]
+    },
+    {
+      "structure": "这是 + DANH TỪ",
+      "meaning": "Câu giới thiệu – Đây là…",
+      "examples": [
+        "这是我的老师。",
+        "这是我妈妈。"
+      ]
+    },
+    {
+      "structure": "请 + ĐỘNG TỪ",
+      "meaning": "Câu mời ai đó làm gì.",
+      "examples": [
+        "请坐。",
+        "请进。"
+      ]
+    },
+    {
+      "structure": "我叫 + TÊN",
+      "meaning": "Câu giới thiệu tên.",
+      "examples": [
+        "我叫王龙。",
+        "他叫小明。"
+      ]
+    },
+    {
+      "structure": "你是哪国人？",
+      "meaning": "Câu hỏi quốc tịch.",
+      "examples": [
+        "我是越南人。",
+        "你是中国人吗？"
+      ]
+    },
+    {
+      "structure": "吃/喝 + 什么？",
+      "meaning": "Hỏi ai đó ăn/uống gì.",
+      "examples": [
+        "你吃什么？",
+        "你喝什么？"
+      ]
+    },
+    {
+      "structure": "Lượng từ + DANH TỪ",
+      "meaning": "Hỏi và trả lời số lượng.",
+      "examples": [
+        "几个人？",
+        "两本书。"
+      ]
+    },
+    {
+      "structure": "多少 + TIỀN",
+      "meaning": "Hỏi giá tiền.",
+      "examples": [
+        "苹果一斤多少钱？",
+        "这个多少？"
+      ]
+    },
+    {
+      "structure": "给 + TÂN NGỮ",
+      "meaning": "Động từ 给 – cho ai cái gì.",
+      "examples": [
+        "给你钱。",
+        "我妈妈给我钱。"
+      ]
+    },
+    {
+      "structure": "住在哪儿？",
+      "meaning": "Hỏi nơi ở.",
+      "examples": [
+        "他住在哪儿？",
+        "我住语言大学。"
+      ]
+    },
+    {
+      "structure": "在 + ĐỊA ĐIỂM + ĐỘNG TỪ",
+      "meaning": "Biểu thị hành động xảy ra ở đâu.",
+      "examples": [
+        "她在图书馆看书。",
+        "我在家做作业。"
+      ]
+    },
+    {
+      "structure": "Câu chính phản",
+      "meaning": "Dạng câu hỏi phủ định – khẳng định.",
+      "examples": [
+        "你去不去？",
+        "他吃不吃？"
+      ]
+    },
+    {
+      "structure": "A 还是 B？",
+      "meaning": "Câu hỏi lựa chọn.",
+      "examples": [
+        "你吃面包还是米饭？",
+        "你是学生还是老师？"
+      ]
+    },
+    {
+      "structure": "Câu với 的",
+      "meaning": "Cấu trúc định ngữ: A 的 B.",
+      "examples": [
+        "我的书。",
+        "黑色的衣服。"
+      ]
+    }
+  ],
+  "HSK2": [
+    {
+      "structure": "Trạng ngữ chỉ thời gian",
+      "meaning": "Chỉ thời gian diễn ra hành động, đứng trước động từ hoặc chủ ngữ.",
+      "examples": [
+        "我来 的时候车已经走了。",
+        "明年我打算去中国留学。"
+      ]
+    },
+    {
+      "structure": "还是 / 或者",
+      "meaning": "Biểu thị sự lựa chọn – '还是' dùng trong câu hỏi, '或者' dùng trong câu trần thuật.",
+      "examples": [
+        "你喜欢苹果还是梨？",
+        "我想当教师或者翻译。"
+      ]
+    },
+    {
+      "structure": "正在 / 在 / 正 + Động từ",
+      "meaning": "Biểu thị hành động đang diễn ra.",
+      "examples": [
+        "我在听音乐呢。",
+        "他正在看电视。"
+      ]
+    },
+    {
+      "structure": "Câu có hai tân ngữ",
+      "meaning": "Một số động từ có 2 tân ngữ – người và vật.",
+      "examples": [
+        "昨天小花告诉我这件事了。",
+        "我送你一本书。"
+      ]
+    },
+    {
+      "structure": "怎么 + Động từ",
+      "meaning": "Dùng để hỏi cách làm việc gì đó.",
+      "examples": [
+        "这个汉字怎么读？",
+        "你怎么知道？"
+      ]
+    },
+    {
+      "structure": "Câu liên động",
+      "meaning": "Sử dụng nhiều động từ để nói rõ hành động đi đâu làm gì.",
+      "examples": [
+        "我去超市买苹果。",
+        "他在升龙中心学习汉语。"
+      ]
+    },
+    {
+      "structure": "太 + Tính từ + 了",
+      "meaning": "Diễn tả mức độ cao, ngạc nhiên hoặc không hài lòng.",
+      "examples": [
+        "太好了！",
+        "太贵了！"
+      ]
+    },
+    {
+      "structure": "Động từ trùng lặp",
+      "meaning": "Biểu thị hành động ngắn gọn, thử làm.",
+      "examples": [
+        "试一试。",
+        "看看这本书。"
+      ]
+    },
+    {
+      "structure": "又…又… / 一边…一边…",
+      "meaning": "Biểu thị hai hành động đồng thời.",
+      "examples": [
+        "她又漂亮又聪明。",
+        "我一边做饭一边看电视。"
+      ]
+    },
+    {
+      "structure": "一点儿 / 有一点儿",
+      "meaning": "Diễn tả mức độ ít hoặc một chút.",
+      "examples": [
+        "有点儿冷。",
+        "给我一点儿咖啡。"
+      ]
+    },
+    {
+      "structure": "以前 / 以后",
+      "meaning": "Biểu thị mốc thời gian – trước hoặc sau.",
+      "examples": [
+        "来中国以前我是学生。",
+        "一个星期以后我回来。"
+      ]
+    },
+    {
+      "structure": "对 + danh từ",
+      "meaning": "Dùng làm trạng ngữ biểu thị đối tượng của hành động.",
+      "examples": [
+        "我对音乐感兴趣。",
+        "他对这件事不感兴趣。"
+      ]
+    },
+    {
+      "structure": "Câu kiêm ngữ",
+      "meaning": "Câu có hai động từ và một chủ ngữ bị chi phối.",
+      "examples": [
+        "老师叫我们读课文。",
+        "我请你们介绍一下。"
+      ]
+    },
+    {
+      "structure": "Phương vị từ",
+      "meaning": "Chỉ vị trí – phía trên, dưới, trong, ngoài, trái, phải…",
+      "examples": [
+        "他在屋子里。",
+        "书在桌子上。"
+      ]
+    },
+    {
+      "structure": "Biểu đạt sự tồn tại với 有 / 在",
+      "meaning": "Có cái gì / Ai ở đâu.",
+      "examples": [
+        "门前有很多自行车。",
+        "玛丽在教室里。"
+      ]
+    },
+    {
+      "structure": "Giới từ 离 / 从 / 往",
+      "meaning": "Chỉ khoảng cách, điểm xuất phát, phương hướng.",
+      "examples": [
+        "我家离超市两公里。",
+        "他从北京来。"
+      ]
+    },
+    {
+      "structure": "Động từ năng nguyện",
+      "meaning": "Muốn, biết, có thể làm gì đó.",
+      "examples": [
+        "我会说汉语。",
+        "他想买词典。"
+      ]
+    },
+    {
+      "structure": "Câu hỏi với 怎么",
+      "meaning": "Hỏi lý do, nguyên nhân.",
+      "examples": [
+        "你怎么没来？",
+        "他怎么不喝酒？"
+      ]
+    },
+    {
+      "structure": "Bổ ngữ trạng thái 得",
+      "meaning": "Miêu tả trình độ, trạng thái hành động.",
+      "examples": [
+        "她学得很好。",
+        "我唱歌唱得不好。"
+      ]
+    },
+    {
+      "structure": "Trợ từ ngữ khí 吧",
+      "meaning": "Biểu thị phán đoán, đề nghị, cầu khiến.",
+      "examples": [
+        "你给我打电话吧？",
+        "我们走吧。"
+      ]
+    },
+    {
+      "structure": "不是…吗？",
+      "meaning": "Câu phản vấn – nhấn mạnh điều đã biết.",
+      "examples": [
+        "你不是学生吗？",
+        "他不是说过了吗？"
+      ]
+    },
+    {
+      "structure": "是…不是…",
+      "meaning": "Câu hỏi chính phản.",
+      "examples": [
+        "你是不是想家了？",
+        "他是不是老师？"
+      ]
+    },
+    {
+      "structure": "Trợ từ 了",
+      "meaning": "Biểu thị hành động đã xảy ra hoặc thay đổi.",
+      "examples": [
+        "我吃饭了。",
+        "他走了没有？"
+      ]
+    },
+    {
+      "structure": "再 / 又",
+      "meaning": "再: sẽ làm lại; 又: đã làm lại.",
+      "examples": [
+        "我明天再去。",
+        "他又喝酒了。"
+      ]
+    },
+    {
+      "structure": "怎么了?",
+      "meaning": "Hỏi tình huống xảy ra.",
+      "examples": [
+        "你怎么了？",
+        "我感冒了。"
+      ]
+    },
+    {
+      "structure": "别…了",
+      "meaning": "Biểu thị khuyên can, ngăn cản.",
+      "examples": [
+        "别说话了。",
+        "别哭了。"
+      ]
+    },
+    {
+      "structure": "因为…所以…",
+      "meaning": "Chỉ nguyên nhân – kết quả.",
+      "examples": [
+        "因为下雨，所以我没去。",
+        "我因为病了，所以没上课。"
+      ]
+    },
+    {
+      "structure": "要是…就…",
+      "meaning": "Câu điều kiện nếu… thì…",
+      "examples": [
+        "要是你来，我就来。",
+        "要是明天晴天，就出去玩。"
+      ]
+    },
+    {
+      "structure": "虽然…但是…",
+      "meaning": "Tuy… nhưng…",
+      "examples": [
+        "虽然很冷，但是我来了。",
+        "虽然他病了，但是他去上课了。"
+      ]
+    }
+  ],
+  "HSK3": [
+    {
+      "structure": "Động từ + 完 / 懂 / 见 / 开 / 上 / 到 / 成",
+      "meaning": "Biểu thị kết quả của hành động như hoàn thành, hiểu được, nhìn thấy, mở ra...",
+      "examples": [
+        "他写完汉字了。",
+        "我听懂你的话了。"
+      ]
+    },
+    {
+      "structure": "Sử dụng lượng từ thời gian",
+      "meaning": "Biểu thị thời lượng của hành động diễn ra trong bao lâu.",
+      "examples": [
+        "他游泳游了一个下午。",
+        "我每天都坚持锻炼一个小时。"
+      ]
+    },
+    {
+      "structure": "So sánh với 比",
+      "meaning": "Dùng 比 để so sánh hai sự vật về tính chất hoặc hành động.",
+      "examples": [
+        "他跑得比我快得多。",
+        "这件比那件贵多了。"
+      ]
+    },
+    {
+      "structure": "Cấu trúc A 跟 B 一样 / 不一样",
+      "meaning": "Biểu thị sự giống hoặc khác nhau giữa hai đối tượng.",
+      "examples": [
+        "这件衣服跟那件衣服价钱不一样。",
+        "我买了一本跟你一样的词典。"
+      ]
+    },
+    {
+      "structure": "不但…而且…",
+      "meaning": "Không những… mà còn…, thể hiện mức độ tăng tiến hoặc bổ sung.",
+      "examples": [
+        "我不但去过北京，而且去过上海。",
+        "她不但会唱歌，而且会弹钢琴。"
+      ]
+    },
+    {
+      "structure": "了 và 不…了",
+      "meaning": "Trợ từ 了 biểu thị sự thay đổi, không… nữa để phủ định sự tiếp diễn.",
+      "examples": [
+        "我今天不发烧了。",
+        "这件衣服小了。"
+      ]
+    },
+    {
+      "structure": "Bổ ngữ xu hướng",
+      "meaning": "Diễn tả phương hướng của hành động thông qua 来 / 去.",
+      "examples": [
+        "她走出学校去了。",
+        "我买回来一本书。"
+      ]
+    },
+    {
+      "structure": "Động từ + 过",
+      "meaning": "Biểu thị kinh nghiệm đã từng làm gì trong quá khứ.",
+      "examples": [
+        "我没吃过北京烤鸭。",
+        "他去过两次中国。"
+      ]
+    },
+    {
+      "structure": "Bổ ngữ động lượng",
+      "meaning": "Chỉ số lần phát sinh hành động.",
+      "examples": [
+        "我读了两次汉语课文。",
+        "他找过玛丽一次。"
+      ]
+    },
+    {
+      "structure": "Cấu trúc 是…的",
+      "meaning": "Nhấn mạnh thời gian, địa điểm, phương thức của hành động đã xảy ra.",
+      "examples": [
+        "我是去年九月来中国的。",
+        "我们是坐飞机来的。"
+      ]
+    },
+    {
+      "structure": "Câu 一…就…",
+      "meaning": "Biểu thị hai hành động xảy ra liên tiếp.",
+      "examples": [
+        "我一下课就回宿舍。",
+        "他一喝酒就脸红。"
+      ]
+    },
+    {
+      "structure": "Câu vị ngữ chủ vị",
+      "meaning": "Miêu tả đối tượng bằng cụm chủ vị làm vị ngữ.",
+      "examples": [
+        "她讲的我没有都听懂。",
+        "我的护照你找到了没有？"
+      ]
+    },
+    {
+      "structure": "Bổ ngữ kết quả 在 / 着 / 好 / 成",
+      "meaning": "Biểu thị kết quả hoặc trạng thái đạt được của hành động.",
+      "examples": [
+        "我把画挂在墙上了。",
+        "我一定要学好汉语。"
+      ]
+    },
+    {
+      "structure": "Câu bị động với 被 / 让 / 叫",
+      "meaning": "Diễn tả sự việc xảy ra do hành động của người khác gây ra.",
+      "examples": [
+        "他的车被偷了。",
+        "录音机叫爸爸关上了。"
+      ]
+    },
+    {
+      "structure": "Bị động dùng 给 / 所",
+      "meaning": "Cấu trúc bị động nâng cao dùng trong văn viết hoặc trang trọng.",
+      "examples": [
+        "教室都让我们给打扫干净了。",
+        "大家都为他所感动。"
+      ]
+    }
+  ],
+  "HSK4": [
+    {
+      "structure": "Bổ ngữ xu hướng phức hợp",
+      "meaning": "Biểu thị phương hướng động tác thông qua các tổ hợp động từ + 来/去.",
+      "examples": [
+        "他跑回家来了。",
+        "爸爸从箱子里拿出来一条项链。"
+      ]
+    },
+    {
+      "structure": "Câu tồn tại",
+      "meaning": "Dùng để miêu tả sự tồn tại và xuất hiện của người/sự vật tại một nơi nào đó.",
+      "examples": [
+        "树上开着很多花。",
+        "门前种着一棵树。"
+      ]
+    },
+    {
+      "structure": "越来越… / 越…越…",
+      "meaning": "Biểu thị mức độ thay đổi theo thời gian hoặc theo tình hình.",
+      "examples": [
+        "我们的汉语越来越好。",
+        "他越吃越喜欢吃。"
+      ]
+    },
+    {
+      "structure": "Câu chữ 把",
+      "meaning": "Nhấn mạnh việc xử lý một đối tượng, tân ngữ đặt trước động từ.",
+      "examples": [
+        "我把作业交给老师了。",
+        "她把门和窗户都擦得干干净净的。"
+      ]
+    },
+    {
+      "structure": "Câu chữ 被",
+      "meaning": "Biểu thị ý nghĩa bị động, người/sự vật là đối tượng bị tác động.",
+      "examples": [
+        "我的钱包被偷了。",
+        "他被撞伤了。"
+      ]
+    },
+    {
+      "structure": "Câu phức không dùng từ liên kết",
+      "meaning": "Thể hiện quan hệ logic giữa các vế câu bằng ngữ nghĩa, không dùng từ nối.",
+      "examples": [
+        "你去我就去。",
+        "下雨就不去了。"
+      ]
+    },
+    {
+      "structure": "Bổ ngữ khả năng",
+      "meaning": "Diễn tả điều kiện khách quan/chủ quan cho hành động có thể xảy ra hay không.",
+      "examples": [
+        "我听得懂老师的话。",
+        "我太累了，跑不动了。"
+      ]
+    },
+    {
+      "structure": "Bổ ngữ trạng thái",
+      "meaning": "Diễn tả trạng thái kết quả của hành động đã xảy ra.",
+      "examples": [
+        "他气得大叫起来。",
+        "他看球赛看得忘了吃饭。"
+      ]
+    },
+    {
+      "structure": "Câu liên kết 只要…就…",
+      "meaning": "Chỉ cần… thì…",
+      "examples": [
+        "只要努力，就一定会成功。",
+        "只要你来，我就高兴。"
+      ]
+    },
+    {
+      "structure": "Bổ ngữ xu hướng mở rộng",
+      "meaning": "Dùng các từ như 起来、出来、下去、下来 để biểu thị sự phát sinh/tiếp diễn/hành động hoàn thành.",
+      "examples": [
+        "大家都笑起来了。",
+        "你把句子写下来吧。"
+      ]
+    },
+    {
+      "structure": "So sánh 想起来 với 想出来",
+      "meaning": "想起来 = nhớ lại; 想出来 = nghĩ ra (ý tưởng mới).",
+      "examples": [
+        "我想起来了这个地方。",
+        "我想不出办法来。"
+      ]
+    },
+    {
+      "structure": "Câu liên kết 只有…才…",
+      "meaning": "Chỉ có… mới…",
+      "examples": [
+        "只有努力，才会成功。",
+        "只有你去，才能把他叫来。"
+      ]
+    },
+    {
+      "structure": "Đại từ nghi vấn dùng phiếm chỉ",
+      "meaning": "Đại từ nghi vấn không dùng để hỏi mà để chỉ chung, chỉ riêng hoặc trống không.",
+      "examples": [
+        "谁都喜欢她。",
+        "我好像在哪儿见过这个人。"
+      ]
+    },
+    {
+      "structure": "Phó từ liên kết 一边…一边…",
+      "meaning": "Dùng để mô tả hai hành động xảy ra đồng thời.",
+      "examples": [
+        "他一边写字一边听音乐。",
+        "她一边说一边笑。"
+      ]
+    },
+    {
+      "structure": "Cấu trúc 除了…以外，都/还…",
+      "meaning": "Dùng để loại trừ hoặc bổ sung thêm ngoài cái đã nói.",
+      "examples": [
+        "除了他以外，大家都来了。",
+        "除了北京，我们还去了上海。"
+      ]
+    },
+    {
+      "structure": "Cấu trúc 先…再…然后…最后…",
+      "meaning": "Diễn tả trình tự các hành động.",
+      "examples": [
+        "我先吃饭，再洗碗，然后学习，最后睡觉。",
+        "他先去西安，再去北京，然后去香港。"
+      ]
+    },
+    {
+      "structure": "Câu phản vấn nhấn mạnh",
+      "meaning": "Dùng để nhấn mạnh khẳng định hoặc phủ định điều hiển nhiên.",
+      "examples": [
+        "你不是中国人吗？",
+        "你没看见我在这儿吗？"
+      ]
+    },
+    {
+      "structure": "连…也/都…",
+      "meaning": "Biểu thị nhấn mạnh, ngay cả… cũng…",
+      "examples": [
+        "他连饭也没吃。",
+        "你连这么简单的题也不会。"
+      ]
+    },
+    {
+      "structure": "Hai lần phủ định",
+      "meaning": "Dùng hai phủ định để nhấn mạnh khẳng định.",
+      "examples": [
+        "我没不知道这件事。",
+        "你不能不去。"
+      ]
+    }
+  ]
+};
+
+    let gLevel = "HSK1", gIndex = 0, gExample = 0;
+
+    function openGrammarGame() {
+      document.getElementById("grammar-modal").style.display = "block";
+      gLevel = "HSK1"; gIndex = 0; gExample = 0;
+      updateGrammarExample();
+    }
+    function changeGrammarLevel() {
+      gLevel = document.getElementById("grammarLevel").value;
+      gIndex = 0; gExample = 0;
+      updateGrammarExample();
+    }
+    function updateGrammarExample() {
+      const item = grammarData[gLevel][gIndex];
+      document.getElementById("grammar-example").textContent = item.examples[gExample];
+      document.getElementById("grammar-feedback").textContent = "";
+      document.getElementById("grammar-answer").value = "";
+    }
+    // Hàm check đáp án đã được cập nhật để bỏ qua dấu "..." (hoặc "…")
+    function checkGrammarAnswer() {
+      const user = document.getElementById("grammar-answer").value.trim();
+      const correct = grammarData[gLevel][gIndex].structure;
+      const mean = grammarData[gLevel][gIndex].meaning;
+      const feedback = document.getElementById("grammar-feedback");
+      // Loại bỏ dấu "..." và "…" trong cả đáp án của người dùng và đáp án đúng
+      const normalizedUser = user.replace(/(\.{3}|…)/g, "");
+      const normalizedCorrect = correct.replace(/(\.{3}|…)/g, "");
+      if (normalizedUser === normalizedCorrect) {
+        feedback.textContent = "✅ Chính xác! " + correct + " = " + mean;
+        feedback.style.color = "green";
+      } else {
+        feedback.textContent = "❌ Sai. Đáp án đúng: " + correct + " = " + mean;
+        feedback.style.color = "red";
+      }
+    }
+    function nextGrammarExample() {
+      const item = grammarData[gLevel][gIndex];
+      gExample = (gExample + 1) % item.examples.length;
+      updateGrammarExample();
+    }
+    function nextGrammarStructure() {
+      const total = grammarData[gLevel].length;
+      gIndex = (gIndex + 1) % total;
+      gExample = 0;
+      updateGrammarExample();
+    }
+  </script>
+</body>
+</html>
