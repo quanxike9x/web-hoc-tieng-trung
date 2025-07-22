@@ -85,6 +85,157 @@
       z-index: 2;
     }
   </style>
+
+  <style>
+/* ===== Nút Chat ===== */
+#chat-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 50px;   
+  height: 50px;  
+  background: #b6b6b6;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 22px;
+  cursor: pointer;
+  z-index: 9999;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  overflow: visible;
+}
+
+/* Vòng tròn mờ (pulse) */
+#chat-btn .pulse {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(182, 182, 182, 0.35);
+  width: 130%;
+  height: 130%;
+  animation: pulse-scale 1.2s infinite ease-in-out;
+  z-index: 1;
+}
+
+@keyframes pulse-scale {
+  0%, 100% { transform: scale(1); opacity: 0.8; }
+  50%      { transform: scale(1.2); opacity: 1; }
+}
+
+/* Vòng tròn line (tỏa ra) */
+#chat-btn .line {
+  position: absolute;
+  border: 2px solid rgba(182, 182, 182, 0.5);
+  border-radius: 50%;
+  width: 100%;
+  height: 100%;
+  animation: line-wave 2.5s infinite;
+  z-index: 0;
+}
+
+#chat-btn .line:nth-child(3) {
+  animation-delay: 1.25s;
+}
+
+@keyframes line-wave {
+  0% { transform: scale(1); opacity: 0.8; }
+  100% { transform: scale(1.4); opacity: 0; }
+}
+
+#chat-btn img {
+  position: relative;
+  z-index: 3;
+}
+
+/* ===== Container Chat ===== */
+#chat-frame-container {
+  display: none;
+  position: fixed;
+  bottom: 90px;
+  right: 20px;
+  width: 380px;
+  height: 500px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  z-index: 9999;
+  opacity: 0;
+  transform: scale(0.8);
+  transition: all 0.3s ease-in-out;
+}
+
+#chat-frame-container.show {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* ===== Iframe Chatbot ===== */
+#chat-frame {
+  width: 100%;
+  height: 100%;
+  border: none;
+  border-radius: 12px;
+}
+
+/* ===== Nút Đóng Chat ===== */
+#chat-close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: #ff4081;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+}
+</style>
+
+<!-- Nút mở Chat -->
+<div id="chat-btn">
+  <span class="pulse"></span>
+  <span class="line"></span>
+  <span class="line"></span>
+  <img src="https://statics.pancake.vn/web-media/7e/0e/75/25/3444569c29ebaa7cfd42d9cdf494cfc37f34e84338a9a65e1eb7f37c-w:512-h:512-l:86297-t:image/png.png" alt="Chat" style="width:30px;height:30px;">
+</div>
+
+<!-- Container Chat -->
+<div id="chat-frame-container">
+  <button id="chat-close">×</button>
+  <iframe id="chat-frame" src="https://thay-quan-tieng-trung.vercel.app/"></iframe>
+</div>
+
+<script>
+const chatBtn = document.getElementById("chat-btn");
+const chatContainer = document.getElementById("chat-frame-container");
+const chatClose = document.getElementById("chat-close");
+
+// Mở Chat
+chatBtn.addEventListener("click", () => {
+  chatBtn.style.display = "none"; 
+  chatContainer.style.display = "block"; 
+  setTimeout(() => {
+    chatContainer.classList.add("show"); 
+  }, 10);
+});
+
+// Đóng Chat
+chatClose.addEventListener("click", () => {
+  chatContainer.classList.remove("show");
+  setTimeout(() => {
+    chatContainer.style.display = "none"; 
+    chatBtn.style.display = "flex"; 
+  }, 300);
+});
+</script>
+
 </head>
 <body>
   <header>汉语水平 HSK Trainer IndexDb_Grammar</header>
