@@ -478,31 +478,37 @@ chatClose.addEventListener("click", () => {
       }
 
       function checkAnswer() {
-        const input = document.getElementById("answer").value.trim();
-        if (!input || !currentWord) return;
-        let correct = false;
-        
-        if (inputMode === "hanzi") {
-          const clean = noTone ? normalize(input) : input.toLowerCase();
-          correct = currentWord[2].some(m => (noTone ? normalize(m) : m.toLowerCase()) === clean);
-        } else {
-          correct = currentWord[0] === input;
-        }
-        
-        if (correct) {
-          document.getElementById("result").textContent = "✅ Đúng rồi!";
-          document.getElementById("wrong-table").style.display = "none";
-          setTimeout(loadNewWord, 1000);
-          saveState();
-        } else {
-          document.getElementById("result").textContent = "❌ Sai rồi!";
-          document.getElementById("wt-hanzi").textContent = currentWord[0];
-          document.getElementById("wt-pinyin").textContent = currentWord[1];
-          document.getElementById("wt-meanings").textContent = currentWord[2].join(", ");
-          document.getElementById("wt-userinput").textContent = input;
-          document.getElementById("wrong-table").style.display = "block";
-        }
-      }
+  const input = document.getElementById("answer").value.trim();
+  if (!input || !currentWord) return;
+
+  let correct = false;
+  const userInput = noTone ? normalize(input) : input.toLowerCase();
+
+  if (inputMode === "hanzi") {
+    // Kiểm tra nghĩa (currentWord[2] là mảng nghĩa)
+    correct = currentWord[2].some(m =>
+      (noTone ? normalize(m) : m.toLowerCase()) === userInput
+    );
+  } else {
+    // Kiểm tra chữ Hán (không phân biệt hoa/thường)
+    correct = currentWord[0].toLowerCase() === userInput;
+  }
+
+  if (correct) {
+    document.getElementById("result").textContent = "✅ Đúng rồi!";
+    document.getElementById("wrong-table").style.display = "none";
+    setTimeout(loadNewWord, 1000);
+    saveState();
+  } else {
+    document.getElementById("result").textContent = "❌ Sai rồi!";
+    document.getElementById("wt-hanzi").textContent = currentWord[0];
+    document.getElementById("wt-pinyin").textContent = currentWord[1];
+    document.getElementById("wt-meanings").textContent = currentWord[2].join(", ");
+    document.getElementById("wt-userinput").textContent = input;
+    document.getElementById("wrong-table").style.display = "block";
+  }
+}
+
 
       function skipWord() { 
         loadNewWord(); 
