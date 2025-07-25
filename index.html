@@ -25,6 +25,31 @@
     #status { margin-top: 10px; font-style: italic; color: #6c757d; }
   </style>
 
+  <style>
+    /* CSS cho nút hướng dẫn */
+    #help-floating-btn {
+  position: fixed;
+  bottom: 20px;
+  left: 20px; /* GÓC TRÁI dưới */
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #4a6ea51a;
+  color: white;
+  font-size: 22px;
+  border: none;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+  cursor: pointer;
+  z-index: 9999;
+  transition: background 0.3s;
+}
+
+#help-floating-btn:hover {
+  background: #3b5c88;
+}
+
+  </style>
+
   <!-- CSS cho popup Luyện viết (grid lines + container cho HanziWriter) -->
   <style>
     #character-target-div {
@@ -203,6 +228,35 @@
 }
 </style>
 
+  
+<style>
+  /* ===== style nút phát âm ===== */
+  .speak-button-img {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 12px;
+  border: 1.5px solid #f28c8c;
+  border-radius: 10px;
+  background-color: #fff;
+  font-size: 16px;
+  color: #333;
+  cursor: pointer;
+  transition: background 0.2s ease, box-shadow 0.2s;
+  margin-top: 6px;
+}
+
+.speak-button-img:hover {
+  background-color: #fff2f2;
+  box-shadow: 0 2px 5px rgba(242, 140, 140, 0.2);
+}
+
+.speak-button-img .icon-img {
+  width: 20px;
+  height: 20px;
+  margin-right: 6px;
+}
+</style>
+
 <!-- Nút mở Chat -->
 <div id="chat-btn">
   <span class="pulse"></span>
@@ -242,6 +296,9 @@ chatClose.addEventListener("click", () => {
 </script>
 
 </head>
+<button id="help-floating-btn" onclick="showHelp()" title="Hướng dẫn sử dụng">
+  📘
+</button>
 <body>
   <header>汉语水平 HSK Trainer IndexDb_Grammar</header>
   <div class="container">
@@ -249,12 +306,18 @@ chatClose.addEventListener("click", () => {
     <div id="file-name">Chưa chọn file</div>
     <div id="status">Đang tải dữ liệu...</div>
     <div class="hanzi" id="hanzi-display">Chưa có từ</div>
+    <div style="text-align:center; margin: 12px 0;">
+  <button class="speak-button-img" onclick="speakCurrentWord()" title="Phát âm">
+    <img src="https://cdn-icons-png.flaticon.com/512/727/727269.png" alt="Phát âm" class="icon-img" />
+    <span id="speak-text">你好</span>
+  </button>
+</div>
+
     <input id="answer" placeholder="Nhập nghĩa hoặc Hán tự..." type="text"/>
     <div>
       <button class="btn success" onclick="checkAnswer()">Kiểm tra</button>
       <button class="btn danger" onclick="skipWord()">Bỏ qua</button>
       <button class="btn secondary" onclick="toggleInputMode()">Đổi chế độ</button>
-      <button class="btn accent" onclick="showHelp()">Hướng dẫn</button>
       <button class="btn secondary" onclick="toggleNoTone()">Bật/Tắt không dấu</button>
       <button class="btn accent" onclick="startPomodoro()">Pomodoro</button>
       <button class="btn secondary" onclick="openWritingPopup()">Luyện viết</button>
@@ -469,6 +532,10 @@ chatClose.addEventListener("click", () => {
 
       function updateWordDisplay() {
         document.getElementById("hanzi-display").textContent = inputMode === "hanzi" ? currentWord[0] : currentWord[2][0];
+        document.getElementById("speak-text").textContent = inputMode === "hanzi"
+  ? currentWord[0]
+  : currentWord[2][0];
+
         document.getElementById("answer").value = "";
         document.getElementById("result").textContent = "";
         document.getElementById("wrong-table").style.display = "none";
@@ -599,6 +666,27 @@ chatClose.addEventListener("click", () => {
         ctx.moveTo(400, 0); ctx.lineTo(0, 400);
         ctx.stroke();
       }
+
+      function speakCurrentWord() {
+  if (!currentWord) return;
+
+  const text = inputMode === "hanzi"
+    ? currentWord[0]        // chữ Hán (ví dụ: 你好)
+    : currentWord[2][0];    // nghĩa tiếng Việt
+
+  const lang = inputMode === "hanzi" ? "zh-CN" : "vi"; // "vi" là giọng Việt chuẩn
+
+  speakGoogle(text, lang);
+}
+
+// 🔊 Phát âm bằng Google Translate TTS (rất chuẩn)
+function speakGoogle(text, lang) {
+  const audio = new Audio(
+    `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodeURIComponent(text)}&tl=${lang}&client=tw-ob`
+  );
+  audio.play();
+}
+
 
       // Khởi chạy ứng dụng khi trang tải xong
       window.addEventListener('DOMContentLoaded', initApp);
