@@ -680,18 +680,15 @@ chatClose.addEventListener("click", () => {
 }
 
 // 🔊 Phát âm bằng Google Translate TTS (rất chuẩn)
-function speakGoogle(text, lang = "zh-CN") {
-  const url = `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodeURIComponent(text)}&tl=${lang}&client=tw-ob`;
+function speakCurrentWord() {
+  const word = document.getElementById("current-word")?.textContent.trim();
+  if (!word) return console.warn("Không tìm thấy từ vựng để phát âm");
 
-  const iframe = document.createElement("iframe");
-  iframe.style.display = "none";
-  iframe.src = url;
-  document.body.appendChild(iframe);
-
-  // Dọn dẹp sau vài giây
-  setTimeout(() => {
-    document.body.removeChild(iframe);
-  }, 3000);
+  const url = `https://translate.google.com/translate_tts?ie=UTF-8&tl=zh-CN&client=tw-ob&q=${encodeURIComponent(word)}`;
+  const audio = new Audio(url);
+  audio.play().catch(err => {
+    console.warn("Không thể phát âm:", err);
+  });
 }
 
       // Khởi chạy ứng dụng khi trang tải xong
