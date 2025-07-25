@@ -681,11 +681,18 @@ chatClose.addEventListener("click", () => {
 
 // 🔊 Phát âm bằng Google Translate TTS (rất chuẩn)
 function speakGoogle(text, lang) {
-  const audio = new Audio(
-    `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodeURIComponent(text)}&tl=${lang}&client=tw-ob`
-  );
-  audio.play();
+  const url = `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodeURIComponent(text)}&tl=${lang}&client=tw-ob`;
+
+  const audio = new Audio();
+  audio.src = url;
+  audio.setAttribute("type", "audio/mpeg");
+
+  // Chạy thử phát âm
+  audio.play().catch((e) => {
+    console.warn("Không phát được âm:", e);
+  });
 }
+
 
 
       // Khởi chạy ứng dụng khi trang tải xong
