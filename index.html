@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="vi">
+<script>document.addEventListener("contextmenu",e=>e.preventDefault()),document.onkeydown=function(e){return 123!=e.keyCode&&((!e.ctrlKey||!e.shiftKey||73!=e.keyCode)&&((!e.ctrlKey||!e.shiftKey||74!=e.keyCode)&&((!e.ctrlKey||85!=e.keyCode)&&(!(e.altKey&&(e.metaKey||e.ctrlKey)&&e.keyCode==73))&&void 0)))};</script><style>body{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;}</style>
 <head>
   <meta charset="utf-8"/>
   <title>HSK Trainer Web Full v3</title>
@@ -680,13 +681,17 @@ chatClose.addEventListener("click", () => {
 
 // 🔊 Phát âm bằng Google Translate TTS (rất chuẩn)
 function speakGoogle(text, lang = "zh-CN") {
-  const url = `https://translate.google.com/translate_tts?ie=UTF-8&tl=${lang}&client=tw-ob&q=${encodeURIComponent(text)}`;
-  const audio = new Audio(url);
+  const url = `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodeURIComponent(text)}&tl=${lang}&client=tw-ob`;
 
-  // Play khi có tương tác người dùng mới hợp lệ
-  audio.play().catch(err => {
-    console.warn("Không thể phát âm thanh:", err);
-  });
+  const iframe = document.createElement("iframe");
+  iframe.style.display = "none";
+  iframe.src = url;
+  document.body.appendChild(iframe);
+
+  // Dọn dẹp sau vài giây
+  setTimeout(() => {
+    document.body.removeChild(iframe);
+  }, 3000);
 }
 
       // Khởi chạy ứng dụng khi trang tải xong
