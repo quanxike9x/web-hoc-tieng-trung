@@ -1,6 +1,21 @@
 <!DOCTYPE html>
 <html lang="vi">
-<script>document.addEventListener("contextmenu",e=>e.preventDefault()),document.onkeydown=function(e){return 123!=e.keyCode&&((!e.ctrlKey||!e.shiftKey||73!=e.keyCode)&&((!e.ctrlKey||!e.shiftKey||74!=e.keyCode)&&((!e.ctrlKey||85!=e.keyCode)&&(!(e.altKey&&(e.metaKey||e.ctrlKey)&&e.keyCode==73))&&void 0)))};</script><style>body{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;}</style>
+  <script>document.addEventListener("contextmenu",e=>e.preventDefault()),document.onkeydown=function(e){return 123!=e.keyCode&&((!e.ctrlKey||!e.shiftKey||73!=e.keyCode)&&((!e.ctrlKey||!e.shiftKey||74!=e.keyCode)&&((!e.ctrlKey||85!=e.keyCode)&&(!(e.altKey&&(e.metaKey||e.ctrlKey)&&e.keyCode==73))&&void 0)))};</script><style>body{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;}</style>
+
+<script>
+    //"Cho phép zoom trang"
+    const els = document.querySelectorAll('meta[name="viewport"]')
+    const el = els[els.length - 1]
+    if(el) {
+        const content = el.content.replace(/maximum-scale=(.+)/, (x, x1) =>
+            x1 ? `maximum-scale=${5 * parseFloat(x1)}` : x
+        ).replace(/user-scalable=no/, _ => 'user-scalable=1')
+        const meta = document.createElement('meta')
+        meta.name = 'viewport'
+        meta.content = content
+        document.head.appendChild(meta)
+    }
+</script>
 <head>
   <meta charset="utf-8"/>
   <title>HSK Trainer Web Full v3</title>
@@ -680,14 +695,11 @@ chatClose.addEventListener("click", () => {
 }
 
 // 🔊 Phát âm bằng Google Translate TTS (rất chuẩn)
-function speakCurrentWord() {
-  const word = document.getElementById("current-word")?.textContent.trim();
-  if (!word) return console.warn("Không tìm thấy từ vựng để phát âm");
-
-  const url = `https://translate.google.com/translate_tts?ie=UTF-8&tl=zh-CN&client=tw-ob&q=${encodeURIComponent(word)}`;
-  const audio = new Audio(url);
+function speakGoogle(text, lang = 'zh-CN') {
+  if (!text) return;
+  const audio = new Audio(`https://voice-relay-api-gg.onrender.com/speak?text=${encodeURIComponent(text)}&lang=${lang}`);
   audio.play().catch(err => {
-    console.warn("Không thể phát âm:", err);
+    console.error('🔇 Không thể phát âm:', err);
   });
 }
 
